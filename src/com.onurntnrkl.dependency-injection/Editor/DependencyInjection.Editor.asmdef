@@ -1,0 +1,12 @@
+{
+    "name": "DependencyInjection.Editor",
+    "references": [
+        "DependencyInjection"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
