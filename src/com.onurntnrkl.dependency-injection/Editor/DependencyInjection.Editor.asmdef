@@ -1,12 +1,18 @@
 {
     "name": "DependencyInjection.Editor",
+    "rootNamespace": "DependencyInjection.Editor",
     "references": [
         "DependencyInjection"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
