@@ -5,29 +5,36 @@ namespace DependencyInjection.Core
 {
     internal class Container
     {
-        private readonly IDictionary<Type, IResolver> _resolversByRegistrationType;
+        private readonly IDictionary<Type, IResolver> _resolversByRegistrationTypes;
 
         public Container()
         {
-            _resolversByRegistrationType = new Dictionary<Type, IResolver>();
+            _resolversByRegistrationTypes = new Dictionary<Type, IResolver>();
         }
 
-        public void AddInstance<TRegistration, TImplementation>(TImplementation implementation) where TRegistration : class where TImplementation : class, TRegistration
+        public void AddInstance(Type registrationType, object instance)
         {
-            var registrationType = typeof(TRegistration);
-            _resolversByRegistrationType.Add(registrationType, new InstanceResolver(implementation));
+            _resolversByRegistrationTypes.Add(registrationType, new InstanceResolver(instance));
         }
 
-        public void AddSingleton<TRegistration, TImplementation>() where TRegistration : class where TImplementation : class, TRegistration
+        public void AddInstance(object instance)
         {
-            var registrationType = typeof(TRegistration);
-            var implementationType = typeof(TImplementation);
-            _resolversByRegistrationType.Add(registrationType, new SingletonResolver(implementationType));
+            AddInstance(instance.GetType(), instance);
+        }
+
+        public void AddSingleton(Type registrationType, Type implementation)
+        {
+            _resolversByRegistrationTypes.Add(registrationType, new SingletonResolver(implementation));
+        }
+
+        public void AddSingleton(Type implementationType)
+        {
+            AddSingleton(implementationType, implementationType);
         }
 
         public object Resolve(Type registrationType)
         {
-            var resolver = _resolversByRegistrationType[registrationType];
+            var resolver = _resolversByRegistrationTypes[registrationType];
             var implementation = resolver.Resolve();
 
             return implementation;
