@@ -41,5 +41,16 @@ namespace DependencyInjection.EditorTests
             var instance = container.Resolve(typeof(ZeroParameterClass));
             Assert.IsInstanceOf<ZeroParameterClass>(instance);
         }
+
+        [Test]
+        public void Resolve_SingletonOfOneParameterClassWithRegistrationType_ShouldParameterReturnInstanceOfParameterType()
+        {
+            var container = new Container();
+            container.AddSingleton(typeof(IZeroParameterClass), typeof(ZeroParameterClass));
+            container.AddSingleton(typeof(IOneParameterClass), typeof(OneParameterClass));
+            var instance = (OneParameterClass)container.Resolve(typeof(IOneParameterClass));
+            var parameterInstance = instance.GetZeroParameterClass();
+            Assert.IsInstanceOf<IZeroParameterClass>(parameterInstance);
+        }
     }
 }
