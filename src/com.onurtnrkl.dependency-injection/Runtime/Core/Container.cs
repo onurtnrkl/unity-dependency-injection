@@ -3,7 +3,7 @@ using System;
 
 namespace DependencyInjection.Core
 {
-    internal class Container
+    internal class Container : IRootResolver
     {
         private readonly IDictionary<Type, IResolver> _resolversByRegistrationTypes;
 
@@ -24,7 +24,7 @@ namespace DependencyInjection.Core
 
         public void AddSingleton(Type registrationType, Type implementation)
         {
-            _resolversByRegistrationTypes.Add(registrationType, new SingletonResolver(implementation));
+            _resolversByRegistrationTypes.Add(registrationType, new SingletonResolver(implementation, this));
         }
 
         public void AddSingleton(Type implementationType)
