@@ -25,6 +25,16 @@ namespace DependencyInjection.EditorTests
         }
 
         [Test]
+        public void Resolve_SingletonMultipleTimes_ShouldReturnSameInstances()
+        {
+            var container = new Container();
+            container.AddSingleton(typeof(IZeroParameterClass), typeof(ZeroParameterClass));
+            var instance1 = container.Resolve(typeof(IZeroParameterClass));
+            var instance2 = container.Resolve(typeof(IZeroParameterClass));
+            Assert.That(instance1, Is.EqualTo(instance2));
+        }
+
+        [Test]
         public void Resolve_SingletonOfZeroParameterClassWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
             var container = new Container();
