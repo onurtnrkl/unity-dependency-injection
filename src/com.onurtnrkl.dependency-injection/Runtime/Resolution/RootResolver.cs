@@ -35,6 +35,7 @@ namespace DependencyInjection.Resolution
             {
                 var constructor = implementationType.GetConstructors(BindingFlags.Public | BindingFlags.Instance)[0];
                 objectActivator = new MethodBaseActivator(constructor);
+                _objectActivatorsByImplementationTypes.Add(implementationType, objectActivator);
             }
 
             return objectActivator;
