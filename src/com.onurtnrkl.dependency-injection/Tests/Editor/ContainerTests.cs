@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace DependencyInjection.EditorTests
 {
-    internal partial class ContainerTests
+    internal sealed class ContainerTests
     {
         [Test]
         public void Resolve_InstanceOfZeroParameterClassWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
@@ -31,7 +31,7 @@ namespace DependencyInjection.EditorTests
             container.AddSingleton(typeof(IZeroParameterClass), typeof(ZeroParameterClass));
             var instance1 = container.Resolve(typeof(IZeroParameterClass));
             var instance2 = container.Resolve(typeof(IZeroParameterClass));
-            Assert.That(instance1, Is.EqualTo(instance2));
+            Assert.AreSame(instance1, instance2);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace DependencyInjection.EditorTests
             container.AddTransient(typeof(IZeroParameterClass), typeof(ZeroParameterClass));
             var instance1 = container.Resolve(typeof(IZeroParameterClass));
             var instance2 = container.Resolve(typeof(IZeroParameterClass));
-            Assert.That(instance1, Is.Not.EqualTo(instance2));
+            Assert.AreNotSame(instance1, instance2);
         }
     }
 }
