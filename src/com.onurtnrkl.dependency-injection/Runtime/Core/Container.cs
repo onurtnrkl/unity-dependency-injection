@@ -32,6 +32,16 @@ namespace DependencyInjection.Core
             AddSingleton(implementationType, implementationType);
         }
 
+        public void AddTransient(Type registrationType, Type implementationType)
+        {
+            _rootResolver.AddObjectResolver(registrationType, new TransientResolver(implementationType, _rootResolver));
+        }
+
+        public void AddTransient(Type implementationType)
+        {
+            AddTransient(implementationType, implementationType);
+        }
+
         public object Resolve(Type registrationType)
         {
             return _rootResolver.Resolve(registrationType);

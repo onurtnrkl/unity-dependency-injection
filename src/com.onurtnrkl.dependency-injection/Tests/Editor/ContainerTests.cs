@@ -62,5 +62,15 @@ namespace DependencyInjection.EditorTests
             var parameterInstance = instance.GetZeroParameterClass();
             Assert.IsInstanceOf<IZeroParameterClass>(parameterInstance);
         }
+
+        [Test]
+        public void Resolve_TransientMultipleTimes_ShouldReturnDifferentInstances()
+        {
+            var container = new Container();
+            container.AddTransient(typeof(IZeroParameterClass), typeof(ZeroParameterClass));
+            var instance1 = container.Resolve(typeof(IZeroParameterClass));
+            var instance2 = container.Resolve(typeof(IZeroParameterClass));
+            Assert.That(instance1, Is.Not.EqualTo(instance2));
+        }
     }
 }
