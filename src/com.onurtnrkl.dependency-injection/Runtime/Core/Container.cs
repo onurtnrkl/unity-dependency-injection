@@ -1,20 +1,20 @@
-using System.Collections.Generic;
 using System;
+using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Core
 {
-    internal class Container : IRootResolver
+    internal class Container
     {
-        private readonly IDictionary<Type, IResolver> _resolversByRegistrationTypes;
+        private readonly IRootResolver _rootResolver;
 
         public Container()
         {
-            _resolversByRegistrationTypes = new Dictionary<Type, IResolver>();
+            _rootResolver = new RootResolver();
         }
 
         public void AddInstance(Type registrationType, object instance)
         {
-            _resolversByRegistrationTypes.Add(registrationType, new InstanceResolver(instance));
+            _rootResolver.AddObjectResolver(registrationType, new InstanceResolver(instance));
         }
 
         public void AddInstance(object instance)
@@ -22,9 +22,9 @@ namespace DependencyInjection.Core
             AddInstance(instance.GetType(), instance);
         }
 
-        public void AddSingleton(Type registrationType, Type implementation)
+        public void AddSingleton(Type registrationType, Type implementationType)
         {
-            _resolversByRegistrationTypes.Add(registrationType, new SingletonResolver(implementation, this));
+            _rootResolver.AddObjectResolver(registrationType, new SingletonResolver(implementationType, _rootResolver));
         }
 
         public void AddSingleton(Type implementationType)
@@ -34,10 +34,7 @@ namespace DependencyInjection.Core
 
         public object Resolve(Type registrationType)
         {
-            var resolver = _resolversByRegistrationTypes[registrationType];
-            var implementation = resolver.Resolve();
-
-            return implementation;
+            return _rootResolver.Resolve(registrationType);
         }
     }
 }
