@@ -1,5 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System;
+using System.Buffers;
+using DependencyInjection.Pool;
 
 namespace DependencyInjection.Resolution
 {
@@ -16,18 +18,21 @@ namespace DependencyInjection.Resolution
 
         public object Resolve()
         {
+            var instance = RuntimeHelpers.GetUninitializedObject(_implementationType);
             var objectActivator = _rootResolver.GetOrCreateObjectActivator(_implementationType);
             var parameterTypes = objectActivator.ParameterTypes;
-            var parameters = new object[parameterTypes.Length];//TODO: Use object pooling instead.
+            var parameterTypesLength = parameterTypes.Length;
 
-            for (var i = 0; i < parameterTypes.Length; i++)
+            using (FixedSizeArrayPool<object>.Get(parameterTypesLength, out var parameters))
             {
-                var parameterType = parameterTypes[i];
-                parameters[i] = _rootResolver.Resolve(parameterType);
-            }
+                for (var i = 0; i < parameterTypesLength; i++)
+                {
+                    var parameterType = parameterTypes[i];
+                    parameters[i] = _rootResolver.Resolve(parameterType);
+                }
 
-            var instance = RuntimeHelpers.GetUninitializedObject(_implementationType);
-            objectActivator.Activate(instance, parameters);
+                objectActivator.Activate(instance, parameters);
+            }
 
             return instance;
         }
