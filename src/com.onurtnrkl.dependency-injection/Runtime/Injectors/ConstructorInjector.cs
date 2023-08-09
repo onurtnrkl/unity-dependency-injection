@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using DependencyInjection.Activators;
 using DependencyInjection.Caching;
 using DependencyInjection.Resolution;
