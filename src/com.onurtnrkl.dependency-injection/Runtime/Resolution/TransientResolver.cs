@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using System;
-using System.Buffers;
 using DependencyInjection.Pool;
 
 namespace DependencyInjection.Resolution
