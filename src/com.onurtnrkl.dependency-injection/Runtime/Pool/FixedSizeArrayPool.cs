@@ -31,7 +31,7 @@ namespace DependencyInjection.Pool
         {
             if (!s_poolsBySizes.TryGetValue(size, out var pool))
             {
-                pool = new ObjectPool<T[]>(() => new T[size], null, (T[] array) => Array.Clear(array, 0, size));
+                pool = new LinkedPool<T[]>(() => new T[size], null, (T[] array) => Array.Clear(array, 0, size));
                 s_poolsBySizes.Add(size, pool);
             }
 
