@@ -1,4 +1,5 @@
-﻿using DependencyInjection.Caching;
+﻿using System.Runtime.CompilerServices;
+using DependencyInjection.Caching;
 using DependencyInjection.EditorTests.Fakes;
 using DependencyInjection.Injectors;
 using DependencyInjection.Resolution;
@@ -28,7 +29,8 @@ namespace DependencyInjection.EditorTests
             var zeroParameterClass = new ZeroParameterClass();
             var objectResolver = new InstanceResolver(zeroParameterClass);
             rootResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
-            var oneParameterClass = (OneParameterClass)ConstructorInjector.Inject(typeof(OneParameterClass), rootResolver);
+            var oneParameterClass = (OneParameterClass)RuntimeHelpers.GetUninitializedObject(typeof(OneParameterClass));
+            ConstructorInjector.Inject(oneParameterClass, rootResolver);
             var actual = oneParameterClass.GetZeroParameterClass();
             var expected = zeroParameterClass;
             Assert.AreEqual(actual, expected);

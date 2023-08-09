@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using DependencyInjection.Injectors;
 
 namespace DependencyInjection.Resolution
@@ -16,7 +17,10 @@ namespace DependencyInjection.Resolution
 
         public object Resolve()
         {
-            return ConstructorInjector.Inject(_implementationType, _rootResolver);
+            var instance = RuntimeHelpers.GetUninitializedObject(_implementationType);
+            ConstructorInjector.Inject(instance, _rootResolver);
+
+            return instance;
         }
     }
 }
