@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System;
 using DependencyInjection.Injectors;
+using DependencyInjection.Caching;
 
 namespace DependencyInjection.Resolution
 {
@@ -21,7 +22,7 @@ namespace DependencyInjection.Resolution
             if (_instance == null)
             {
                 var uninitializedObject = RuntimeHelpers.GetUninitializedObject(_implementationType);
-                var objectActivator = _rootResolver.GetOrCreateObjectActivator(_implementationType);
+                var objectActivator = ObjectActivatorCache.GetOrCreateObjectActivator(_implementationType);
                 _instance = MethodBaseInjector.Inject(uninitializedObject, objectActivator, _rootResolver);
             }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using DependencyInjection.Activators;
 
 namespace DependencyInjection.Resolution
 {
@@ -7,6 +6,5 @@ namespace DependencyInjection.Resolution
     {
         object Resolve(Type registrationType);
         void AddObjectResolver(Type registrationType, IObjectResolver objectResolver);
-        IObjectActivator GetOrCreateObjectActivator(Type implementationType);
     }
 }
