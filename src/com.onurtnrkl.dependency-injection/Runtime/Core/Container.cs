@@ -5,16 +5,16 @@ namespace DependencyInjection.Core
 {
     internal class Container
     {
-        private readonly IRootResolver _rootResolver;
+        private readonly IContainerResolver _containerResolver;
 
         public Container()
         {
-            _rootResolver = new RootResolver();
+            _containerResolver = new ContainerResolver();
         }
 
         public void AddInstance(Type registrationType, object instance)
         {
-            _rootResolver.AddObjectResolver(registrationType, new InstanceResolver(instance));
+            _containerResolver.AddObjectResolver(registrationType, new InstanceResolver(instance));
         }
 
         public void AddInstance(object instance)
@@ -24,7 +24,7 @@ namespace DependencyInjection.Core
 
         public void AddSingleton(Type registrationType, Type implementationType)
         {
-            _rootResolver.AddObjectResolver(registrationType, new SingletonResolver(implementationType, _rootResolver));
+            _containerResolver.AddObjectResolver(registrationType, new SingletonResolver(implementationType, _containerResolver));
         }
 
         public void AddSingleton(Type implementationType)
@@ -34,7 +34,7 @@ namespace DependencyInjection.Core
 
         public void AddTransient(Type registrationType, Type implementationType)
         {
-            _rootResolver.AddObjectResolver(registrationType, new TransientResolver(implementationType, _rootResolver));
+            _containerResolver.AddObjectResolver(registrationType, new TransientResolver(implementationType, _containerResolver));
         }
 
         public void AddTransient(Type implementationType)
@@ -44,7 +44,7 @@ namespace DependencyInjection.Core
 
         public object Resolve(Type registrationType)
         {
-            return _rootResolver.Resolve(registrationType);
+            return _containerResolver.Resolve(registrationType);
         }
     }
 }

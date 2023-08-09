@@ -3,11 +3,11 @@ using System;
 
 namespace DependencyInjection.Resolution
 {
-    internal sealed class RootResolver : IRootResolver
+    internal sealed class ContainerResolver : IContainerResolver
     {
         private readonly IDictionary<Type, IObjectResolver> _objectResolversByRegistrationTypes;
 
-        public RootResolver()
+        public ContainerResolver()
         {
             _objectResolversByRegistrationTypes = new Dictionary<Type, IObjectResolver>();
         }

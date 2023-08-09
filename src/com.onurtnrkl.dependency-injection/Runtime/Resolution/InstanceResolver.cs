@@ -2,16 +2,16 @@
 {
     internal sealed class InstanceResolver : IObjectResolver
     {
-        private readonly object _implementation;
+        private readonly object _instance;
 
-        public InstanceResolver(object implementation)
+        public InstanceResolver(object instance)
         {
-            _implementation = implementation;
+            _instance = instance;
         }
 
         public object Resolve()
         {
-            return _implementation;
+            return _instance;
         }
     }
 }

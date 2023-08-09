@@ -7,13 +7,13 @@ namespace DependencyInjection.Resolution
     internal sealed class SingletonResolver : IObjectResolver
     {
         private readonly Type _implementationType;
-        private readonly IRootResolver _rootResolver;
+        private readonly IContainerResolver _containerResolver;
         private object _instance;
 
-        public SingletonResolver(Type implementationType, IRootResolver rootResolver)
+        public SingletonResolver(Type implementationType, IContainerResolver containerResolver)
         {
             _implementationType = implementationType;
-            _rootResolver = rootResolver;
+            _containerResolver = containerResolver;
         }
 
         public object Resolve()
@@ -21,7 +21,7 @@ namespace DependencyInjection.Resolution
             if (_instance == null)
             {
                 _instance = RuntimeHelpers.GetUninitializedObject(_implementationType);
-                ConstructorInjector.Inject(_instance, _rootResolver);
+                ConstructorInjector.Inject(_instance, _containerResolver);
             }
 
             return _instance;

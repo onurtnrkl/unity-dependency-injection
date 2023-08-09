@@ -11,11 +11,11 @@ namespace DependencyInjection.Injectors
     {
         private const BindingFlags MethodBindingFlags = BindingFlags.Public | BindingFlags.Instance;
 
-        public static void Inject(object uninitializedObject, IRootResolver rootResolver)
+        public static void Inject(object uninitializedObject, IContainerResolver containerResolver)
         {
             var implementationType = uninitializedObject.GetType();
             var objectActivator = GetOrCreateObjectActivator(implementationType);
-            MethodBaseInjector.Inject(uninitializedObject, objectActivator, rootResolver);
+            MethodBaseInjector.Inject(uninitializedObject, objectActivator, containerResolver);
         }
 
         private static IObjectActivator GetOrCreateObjectActivator(Type implementationType)

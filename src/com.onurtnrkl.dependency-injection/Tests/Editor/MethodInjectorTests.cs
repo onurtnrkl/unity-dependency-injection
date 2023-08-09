@@ -24,12 +24,12 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Inject_ClassWithInjectableMethod_ShouldReturnSameInstanceOfParameter()
         {
-            var rootResolver = new RootResolver();
+            var containerResolver = new ContainerResolver();
             var zeroParameterClass = new ZeroParameterClass();
             var objectResolver = new InstanceResolver(zeroParameterClass);
-            rootResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
+            containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
             var classWithInjectableMethod = new ClassWithInjectableMethod();
-            MethodInjector.Inject(classWithInjectableMethod, rootResolver);
+            MethodInjector.Inject(classWithInjectableMethod, containerResolver);
             var actual = classWithInjectableMethod.GetZeroParameterClass();
             var expected = zeroParameterClass;
             Assert.AreEqual(actual, expected);
