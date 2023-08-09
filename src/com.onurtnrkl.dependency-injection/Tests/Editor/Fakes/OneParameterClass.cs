@@ -4,6 +4,11 @@
     {
         private readonly IZeroParameterClass _zeroParameterClass;
 
+        public OneParameterClass()
+        {
+            _zeroParameterClass = null;
+        }
+
         public OneParameterClass(IZeroParameterClass zeroParameterClass)
         {
             _zeroParameterClass = zeroParameterClass;

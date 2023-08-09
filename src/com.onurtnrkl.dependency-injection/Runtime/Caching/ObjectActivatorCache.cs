@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using DependencyInjection.Activators;
-using System.Reflection;
 
 namespace DependencyInjection.Caching
 {
@@ -9,16 +8,14 @@ namespace DependencyInjection.Caching
     {
         private readonly static Dictionary<Type, IObjectActivator> s_objectActivatorsByImplementationTypes = new();
 
-        public static IObjectActivator GetOrCreateObjectActivator(Type implementationType)
+        public static bool TryGet(Type implementationType, out IObjectActivator objectActivator)
         {
-            if (!s_objectActivatorsByImplementationTypes.TryGetValue(implementationType, out var objectActivator))
-            {
-                var constructor = implementationType.GetConstructors(BindingFlags.Public | BindingFlags.Instance)[0];
-                objectActivator = new MethodBaseActivator(constructor);
-                s_objectActivatorsByImplementationTypes.Add(implementationType, objectActivator);
-            }
+            return s_objectActivatorsByImplementationTypes.TryGetValue(implementationType, out objectActivator);
+        }
 
-            return objectActivator;
+        public static void Add(Type implementationType, IObjectActivator objectActivator)
+        {
+            s_objectActivatorsByImplementationTypes.Add(implementationType, objectActivator);
         }
 
         public static void Clear()
