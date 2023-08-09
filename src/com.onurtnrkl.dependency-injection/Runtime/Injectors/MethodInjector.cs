@@ -34,7 +34,7 @@ namespace DependencyInjection.Injectors
         {
             var methodInfos = implementationType.GetMethods(MethodBindingFlags);
             MethodInfo foundMethodInfo = null;
-            var foundParametersCount = -1;
+            var foundParametersCount = int.MinValue;
 
             foreach (var methodInfo in methodInfos)
             {
