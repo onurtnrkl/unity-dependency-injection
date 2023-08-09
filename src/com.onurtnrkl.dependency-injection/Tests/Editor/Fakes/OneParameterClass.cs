@@ -1,6 +1,6 @@
 ﻿namespace DependencyInjection.EditorTests.Fakes
 {
-    internal class OneParameterClass : IOneParameterClass
+    internal sealed class OneParameterClass : IOneParameterClass
     {
         private readonly IZeroParameterClass _zeroParameterClass;
 
