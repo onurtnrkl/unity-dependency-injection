@@ -6,7 +6,7 @@ namespace DependencyInjection.Injectors
 {
     internal static class MethodBaseInjector
     {
-        public static object Inject(object uninitializedObject, IObjectActivator objectActivator, IRootResolver rootResolver)
+        public static void Inject(object uninitializedObject, IObjectActivator objectActivator, IRootResolver rootResolver)
         {
             var parameterTypes = objectActivator.ParameterTypes;
             var parameterTypesLength = parameterTypes.Length;
@@ -21,8 +21,6 @@ namespace DependencyInjection.Injectors
 
                 objectActivator.Activate(uninitializedObject, parameters);
             }
-
-            return uninitializedObject;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace DependencyInjection.EditorTests.Fakes
 {
-    internal class ZeroParameterClass : IZeroParameterClass
+    internal sealed class ZeroParameterClass : IZeroParameterClass
     {
         public ZeroParameterClass()
         {

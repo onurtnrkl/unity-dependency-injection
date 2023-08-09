@@ -17,7 +17,7 @@ namespace DependencyInjection.Resolution
 
         public object Resolve()
         {
-            _instance ??= CostructorInjector.Inject(_implementationType, _rootResolver);
+            _instance ??= ConstructorInjector.Inject(_implementationType, _rootResolver);
 
             return _instance;
         }

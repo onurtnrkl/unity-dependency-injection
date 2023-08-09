@@ -7,7 +7,7 @@ using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Injectors
 {
-    internal static class CostructorInjector
+    internal static class ConstructorInjector
     {
         private const BindingFlags CostructorBindingFlags = BindingFlags.Public | BindingFlags.Instance;
 
@@ -15,15 +15,16 @@ namespace DependencyInjection.Injectors
         {
             var uninitializedObject = RuntimeHelpers.GetUninitializedObject(implementationType);
             var objectActivator = GetOrCreateObjectActivator(implementationType);
+            MethodBaseInjector.Inject(uninitializedObject, objectActivator, rootResolver);
 
-            return MethodBaseInjector.Inject(uninitializedObject, objectActivator, rootResolver);
+            return uninitializedObject;
         }
 
         private static IObjectActivator GetOrCreateObjectActivator(Type implementationType)
         {
             if (!ObjectActivatorCache.TryGet(implementationType, out var objectActivator))
             {
-                var constructorInfo = FindCostructorInfo(implementationType);
+                var constructorInfo = FindConstructorInfo(implementationType);
                 objectActivator = new MethodBaseActivator(constructorInfo);
                 ObjectActivatorCache.Add(implementationType, objectActivator);
             }
@@ -31,7 +32,7 @@ namespace DependencyInjection.Injectors
             return objectActivator;
         }
 
-        private static ConstructorInfo FindCostructorInfo(Type implementationType)
+        private static ConstructorInfo FindConstructorInfo(Type implementationType)
         {
             var constructorInfos = implementationType.GetConstructors(CostructorBindingFlags);
             var foundConstructorInfo = constructorInfos[0];

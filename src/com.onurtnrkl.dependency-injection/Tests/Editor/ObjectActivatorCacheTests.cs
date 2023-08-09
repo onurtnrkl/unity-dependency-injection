@@ -1,4 +1,5 @@
 ﻿using DependencyInjection.Caching;
+using DependencyInjection.Core;
 using DependencyInjection.EditorTests.Fakes;
 using DependencyInjection.EditorTests.Mocks;
 using NUnit.Framework;
