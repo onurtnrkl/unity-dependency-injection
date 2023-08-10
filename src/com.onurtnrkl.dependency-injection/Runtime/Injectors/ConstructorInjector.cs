@@ -32,7 +32,7 @@ namespace DependencyInjection.Injectors
         private static ConstructorInfo FindConstructorInfo(Type implementationType)
         {
             var constructorInfos = implementationType.GetConstructors(CostructorBindingFlags);
-            ConstructorInfo foundConstructorInfo = null;
+            var foundConstructorInfo = default(ConstructorInfo);
             var foundParametersCount = int.MinValue;
 
             foreach (var constructorInfo in constructorInfos)

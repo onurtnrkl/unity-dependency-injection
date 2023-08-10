@@ -33,7 +33,7 @@ namespace DependencyInjection.Injectors
         private static MethodInfo FindMethodInfo(Type implementationType)
         {
             var methodInfos = implementationType.GetMethods(MethodBindingFlags);
-            MethodInfo foundMethodInfo = null;
+            var foundMethodInfo = default(MethodInfo);
             var foundParametersCount = int.MinValue;
 
             foreach (var methodInfo in methodInfos)
