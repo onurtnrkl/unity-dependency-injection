@@ -1,14 +1,31 @@
+using System.Collections.Generic;
 using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Core
 {
-    internal class Container : IContainer
+    internal sealed class Container : IContainer
     {
-        private readonly IContainerResolver _containerResolver;
+        private readonly IContainerResolver _resolver;
+        private readonly IList<IContainer> _children;
+        private readonly IContainer _parent;
 
-        public Container(IContainerResolver containerResolver)
+        public IContainerResolver Resolver => _resolver;
+
+        public Container(IContainerResolver resolver, IList<IContainer> children, IContainer parent)
         {
-            _containerResolver = containerResolver;
+            _resolver = resolver;
+            _children = children;
+            _parent = parent;
+        }
+
+        public void AddChild(IContainer child)
+        {
+            _children.Add(child);
+        }
+
+        public void RemoveChild(IContainer child)
+        {
+            _children.Remove(child);
         }
     }
 }
