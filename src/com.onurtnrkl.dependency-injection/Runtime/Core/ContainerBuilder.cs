@@ -12,14 +12,14 @@ namespace DependencyInjection.Core
             _containerResolver = new ContainerResolver();
         }
 
-        public void AddInstance(Type registrationType, object instance)
+        public void AddSingleton(Type registrationType, object implementationInstance)
         {
-            _containerResolver.AddObjectResolver(registrationType, new InstanceResolver(instance));
+            _containerResolver.AddObjectResolver(registrationType, new SingletonResolver(implementationInstance, _containerResolver));
         }
 
-        public void AddInstance(object instance)
+        public void AddSingleton(object implementationInstance)
         {
-            AddInstance(instance.GetType(), instance);
+            AddSingleton(implementationInstance.GetType(), implementationInstance);
         }
 
         public void AddSingleton(Type registrationType, Type implementationType)

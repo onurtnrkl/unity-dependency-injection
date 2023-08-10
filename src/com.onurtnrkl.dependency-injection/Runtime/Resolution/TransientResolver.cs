@@ -17,10 +17,10 @@ namespace DependencyInjection.Resolution
 
         public object Resolve()
         {
-            var instance = RuntimeHelpers.GetUninitializedObject(_implementationType);
-            ConstructorInjector.Inject(instance, _containerResolver);
+            var implementationInstance = RuntimeHelpers.GetUninitializedObject(_implementationType);
+            ConstructorInjector.Inject(implementationInstance, _containerResolver);
 
-            return instance;
+            return implementationInstance;
         }
     }
 }

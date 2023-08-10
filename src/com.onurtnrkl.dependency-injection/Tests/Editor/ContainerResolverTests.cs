@@ -8,20 +8,20 @@ namespace DependencyInjection.EditorTests
     internal sealed class ContainerResolverTests
     {
         [Test]
-        public void Resolve_InstanceOfZeroParameterClassWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
+        public void Resolve_SingletonWithZeroParameterClassInstanceWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
             var containerResolver = new ContainerResolver();
-            var objectResolver = new InstanceResolver(new ZeroParameterClass());
+            var objectResolver = new SingletonResolver(new ZeroParameterClass(), containerResolver);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(IZeroParameterClass));
             Assert.IsInstanceOf<IZeroParameterClass>(instance);
         }
 
         [Test]
-        public void Resolve_InstanceOfZeroParameterClassWithImplementationType_ShouldReturnInstanceOfImplementationType()
+        public void Resolve_SingletonWithZeroParameterClassInstanceWithImplementationType_ShouldReturnInstanceOfImplementationType()
         {
             var containerResolver = new ContainerResolver();
-            var objectResolver = new InstanceResolver(new ZeroParameterClass());
+            var objectResolver = new SingletonResolver(new ZeroParameterClass(), containerResolver);
             containerResolver.AddObjectResolver(typeof(ZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(ZeroParameterClass));
             Assert.IsInstanceOf<ZeroParameterClass>(instance);
