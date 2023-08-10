@@ -14,26 +14,36 @@ namespace DependencyInjection.Injectors
         public static void Inject(object uninitializedObject, IContainerResolver containerResolver)
         {
             var implementationType = uninitializedObject.GetType();
-            var objectActivator = GetOrCreateObjectActivator(implementationType);
-            MethodBaseInjector.Inject(uninitializedObject, objectActivator, containerResolver);
-        }
 
-        private static IObjectActivator GetOrCreateObjectActivator(Type implementationType)
-        {
             if (!ObjectActivatorCache.TryGet(implementationType, out var objectActivator))
             {
-                var methodInfo = FindMethodInfo(implementationType);
-                objectActivator = new MethodBaseActivator(methodInfo);
+                if (!TryCreateObjectActivator(implementationType, out objectActivator))
+                {
+                    return;
+                }
+
                 ObjectActivatorCache.Add(implementationType, objectActivator);
             }
 
-            return objectActivator;
+            MethodBaseInjector.Inject(uninitializedObject, objectActivator, containerResolver);
         }
 
-        private static MethodInfo FindMethodInfo(Type implementationType)
+        private static bool TryCreateObjectActivator(Type implementationType, out IObjectActivator objectActivator)
         {
+            if (!TryFindMethodInfo(implementationType, out var constructorInfo))
+            {
+                objectActivator = null;
+                return false;
+            }
+
+            objectActivator = new MethodBaseActivator(constructorInfo);
+            return true;
+        }
+
+        private static bool TryFindMethodInfo(Type implementationType, out MethodInfo foundMethodInfo)
+        {
+            foundMethodInfo = default;
             var methodInfos = implementationType.GetMethods(MethodBindingFlags);
-            var foundMethodInfo = default(MethodInfo);
             var foundParametersCount = int.MinValue;
 
             foreach (var methodInfo in methodInfos)
@@ -48,7 +58,7 @@ namespace DependencyInjection.Injectors
                 foundParametersCount = parametersCount;
             }
 
-            return foundMethodInfo;
+            return foundMethodInfo != default;
         }
     }
 }
