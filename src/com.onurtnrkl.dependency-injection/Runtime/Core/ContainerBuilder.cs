@@ -3,7 +3,7 @@ using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Core
 {
-    internal class ContainerBuilder : IContainerBuilder
+    internal sealed class ContainerBuilder : IContainerBuilder
     {
         private readonly IContainerResolver _containerResolver;
 
@@ -17,29 +17,14 @@ namespace DependencyInjection.Core
             _containerResolver.AddObjectResolver(registrationType, new SingletonResolver(implementationInstance, _containerResolver));
         }
 
-        public void AddSingleton(object implementationInstance)
-        {
-            AddSingleton(implementationInstance.GetType(), implementationInstance);
-        }
-
         public void AddSingleton(Type registrationType, Type implementationType)
         {
             _containerResolver.AddObjectResolver(registrationType, new SingletonResolver(implementationType, _containerResolver));
         }
 
-        public void AddSingleton(Type implementationType)
-        {
-            AddSingleton(implementationType, implementationType);
-        }
-
         public void AddTransient(Type registrationType, Type implementationType)
         {
             _containerResolver.AddObjectResolver(registrationType, new TransientResolver(implementationType, _containerResolver));
-        }
-
-        public void AddTransient(Type implementationType)
-        {
-            AddTransient(implementationType, implementationType);
         }
 
         public IContainer Build()
