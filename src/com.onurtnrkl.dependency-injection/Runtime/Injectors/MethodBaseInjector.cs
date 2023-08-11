@@ -6,7 +6,7 @@ namespace DependencyInjection.Injectors
 {
     internal static class MethodBaseInjector
     {
-        public static void Inject(object uninitializedObject, IObjectActivator objectActivator, IContainerResolver containerResolver)
+        public static void Inject(object uninitializedObject, IObjectActivator objectActivator, IRegistrationResolver containerResolver)
         {
             var parameterTypes = objectActivator.ParameterTypes;
             var parameterTypesLength = parameterTypes.Length;

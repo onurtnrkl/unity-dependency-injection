@@ -1,5 +1,5 @@
-﻿using DependencyInjection.Core;
-using DependencyInjection.Resolution;
+﻿using System;
+using DependencyInjection.Core;
 
 namespace DependencyInjection.Containers
 {
@@ -8,8 +8,6 @@ namespace DependencyInjection.Containers
         private readonly IContainer _container;
 
         public static ApplicationContainer Instance { get; private set; }
-
-        public IContainerResolver Resolver => _container.Resolver;
 
         private ApplicationContainer(IInstaller applicationInstaller)
         {
@@ -37,6 +35,11 @@ namespace DependencyInjection.Containers
         public void RemoveChild(IContainer child)
         {
             _container.RemoveChild(child);
+        }
+
+        public object Resolve(Type registrationType)
+        {
+            return _container.Resolve(registrationType);
         }
     }
 }

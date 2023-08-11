@@ -7,18 +7,18 @@ namespace DependencyInjection.Resolution
     internal sealed class TransientResolver : IObjectResolver
     {
         private readonly Type _implementationType;
-        private readonly IContainerResolver _containerResolver;
+        private readonly IRegistrationResolver _registrationResolver;
 
-        public TransientResolver(Type implementationType, IContainerResolver containerResolver)
+        public TransientResolver(Type implementationType, IRegistrationResolver registrationResolver)
         {
             _implementationType = implementationType;
-            _containerResolver = containerResolver;
+            _registrationResolver = registrationResolver;
         }
 
         public object Resolve()
         {
             var implementationInstance = RuntimeHelpers.GetUninitializedObject(_implementationType);
-            ConstructorInjector.Inject(implementationInstance, _containerResolver);
+            ConstructorInjector.Inject(implementationInstance, _registrationResolver);
 
             return implementationInstance;
         }

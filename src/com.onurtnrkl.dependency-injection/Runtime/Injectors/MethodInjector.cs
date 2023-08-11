@@ -11,7 +11,7 @@ namespace DependencyInjection.Injectors
     {
         private const BindingFlags MethodBindingFlags = BindingFlags.Public | BindingFlags.Instance;
 
-        public static void Inject(object uninitializedObject, IContainerResolver containerResolver)
+        public static void Inject(object uninitializedObject, IRegistrationResolver registrationResolver)
         {
             var implementationType = uninitializedObject.GetType();
 
@@ -22,7 +22,7 @@ namespace DependencyInjection.Injectors
                 ObjectActivatorCache.Add(implementationType, objectActivator);
             }
 
-            MethodBaseInjector.Inject(uninitializedObject, objectActivator, containerResolver);
+            MethodBaseInjector.Inject(uninitializedObject, objectActivator, registrationResolver);
         }
 
         private static bool TryCreateObjectActivator(Type implementationType, out IObjectActivator objectActivator)

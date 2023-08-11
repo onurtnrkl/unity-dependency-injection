@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DependencyInjection.Resolution;
 
@@ -8,8 +9,6 @@ namespace DependencyInjection.Core
         private readonly IContainerResolver _resolver;
         private readonly IList<IContainer> _children;
         private readonly IContainer _parent;
-
-        public IContainerResolver Resolver => _resolver;
 
         public Container(IContainerResolver resolver, IList<IContainer> children, IContainer parent)
         {
@@ -26,6 +25,11 @@ namespace DependencyInjection.Core
         public void RemoveChild(IContainer child)
         {
             _children.Remove(child);
+        }
+
+        public object Resolve(Type registrationType)
+        {
+            return _resolver.Resolve(registrationType);
         }
     }
 }

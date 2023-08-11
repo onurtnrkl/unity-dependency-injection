@@ -2,9 +2,8 @@
 
 namespace DependencyInjection.Core
 {
-    internal interface IContainer
+    internal interface IContainer : IRegistrationResolver
     {
-        IContainerResolver Resolver { get; }
         void AddChild(IContainer child);
         void RemoveChild(IContainer child);
     }

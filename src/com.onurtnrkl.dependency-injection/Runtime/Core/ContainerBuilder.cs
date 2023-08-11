@@ -14,6 +14,7 @@ namespace DependencyInjection.Core
         {
             _containerResolver = new ContainerResolver();
             _children = new List<IContainer>();
+            // TODO: Set application container as parent
         }
 
         public void AddInstance(Type registrationType, object implementationInstance)
