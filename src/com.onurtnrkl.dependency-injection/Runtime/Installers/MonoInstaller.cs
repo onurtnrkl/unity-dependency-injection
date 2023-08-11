@@ -2,7 +2,7 @@
 
 namespace DependencyInjection.Core
 {
-    internal abstract class Installer : MonoBehaviour, IInstaller
+    internal abstract class MonoInstaller : MonoBehaviour, IMonoInstaller
     {
         public abstract void Install(IContainerBuilder containerBuilder);
     }

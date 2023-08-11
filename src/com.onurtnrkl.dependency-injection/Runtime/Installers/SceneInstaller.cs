@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using DependencyInjection.Core;
+using UnityEngine;
 
 namespace DependencyInjection.Installers
 {
-    internal sealed class SceneInstaller : Installer
+    internal sealed class SceneInstaller : MonoBehaviour, ISceneInstaller
     {
-        public override void Install(IContainerBuilder containerBuilder)
+        public void Install(IContainerBuilder containerBuilder)
         {
             // TODO: GetComponents causes memory allocation. Use pooling instead.
-            var installers = new List<IInstaller>();
+            var installers = new List<IMonoInstaller>();
             GetComponents(installers);
-            installers.RemoveAt(0);
 
             foreach (var installer in installers)
             {
