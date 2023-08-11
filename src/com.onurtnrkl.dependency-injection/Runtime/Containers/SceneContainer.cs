@@ -11,10 +11,12 @@ namespace DependencyInjection.Containers
 
         private SceneContainer(IInstaller sceneInstaller)
         {
+            var parent = ApplicationContainer.Instance;
             var containerBuilder = new ContainerBuilder();
             sceneInstaller.Install(containerBuilder);
+            containerBuilder.SetParent(parent);
             _container = containerBuilder.Build();
-            ApplicationContainer.Instance.AddChild(_container);
+            parent.AddChild(_container);
         }
 
         public static void CreateInstance(IInstaller sceneInstaller)
