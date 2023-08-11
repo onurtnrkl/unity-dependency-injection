@@ -8,5 +8,7 @@ namespace DependencyInjection.Core
         void AddSingleton(Type registrationType, Type implementationType);
         void AddTransient(Type registrationType, Type implementationType);
         void AddChild(IContainer child);
+        void SetParent(IContainer parent);
+        IContainer Build();
     }
 }
