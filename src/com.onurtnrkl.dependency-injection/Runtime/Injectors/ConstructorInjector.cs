@@ -29,19 +29,19 @@ namespace DependencyInjection.Injectors
 
         private static bool TryCreateObjectActivator(Type implementationType, out IObjectActivator objectActivator)
         {
-            if (!TryFindConstructorInfo(implementationType, out var constructorInfo))
+            objectActivator = null;
+
+            if (TryFindConstructorInfo(implementationType, out var constructorInfo))
             {
-                objectActivator = null;
-                return false;
+                objectActivator = new MethodBaseActivator(constructorInfo);
             }
 
-            objectActivator = new MethodBaseActivator(constructorInfo);
-            return true;
+            return objectActivator != null;
         }
 
         private static bool TryFindConstructorInfo(Type implementationType, out ConstructorInfo foundConstructorInfo)
         {
-            foundConstructorInfo = default;
+            foundConstructorInfo = null;
             var constructorInfos = implementationType.GetConstructors(CostructorBindingFlags);
             var foundParametersCount = int.MinValue;
 
@@ -55,7 +55,7 @@ namespace DependencyInjection.Injectors
                 foundParametersCount = parametersCount;
             }
 
-            return foundConstructorInfo != default;
+            return foundConstructorInfo != null;
         }
     }
 }

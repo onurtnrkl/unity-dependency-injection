@@ -3,29 +3,31 @@ using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Containers
 {
-    internal sealed class ApplicationContainer : IContainer
+    internal sealed class SceneContainer : IContainer
     {
         private readonly IContainer _container;
 
-        public static ApplicationContainer Instance { get; private set; }
+        public static SceneContainer Instance { get; private set; }
 
         public IContainerResolver Resolver => _container.Resolver;
 
-        private ApplicationContainer(IInstaller applicationInstaller)
+        private SceneContainer(IInstaller sceneInstaller)
         {
             var containerBuilder = new ContainerBuilder();
-            applicationInstaller.Install(containerBuilder);
+            sceneInstaller.Install(containerBuilder);
             _container = containerBuilder.Build();
+            ApplicationContainer.Instance.AddChild(_container);
         }
 
-        public static void CreateInstance(IInstaller applicationInstaller)
+        public static void CreateInstance(IInstaller sceneInstaller)
         {
-            Instance = new ApplicationContainer(applicationInstaller);
+            Instance = new SceneContainer(sceneInstaller);
         }
 
         public static void DestroyInstance()
         {
             // TODO: Dispose container first
+            ApplicationContainer.Instance.RemoveChild(Instance._container);
             Instance = null;
         }
 

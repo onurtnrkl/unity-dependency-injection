@@ -8,20 +8,20 @@ namespace DependencyInjection.EditorTests
     internal sealed class ContainerResolverTests
     {
         [Test]
-        public void Resolve_SingletonWithZeroParameterClassInstanceWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
+        public void Resolve_InstanceWithZeroParameterClassInstanceWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
             var containerResolver = new ContainerResolver();
-            var objectResolver = new SingletonResolver(new ZeroParameterClass(), containerResolver);
+            var objectResolver = new InstanceResolver(new ZeroParameterClass());
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(IZeroParameterClass));
             Assert.IsInstanceOf<IZeroParameterClass>(instance);
         }
 
         [Test]
-        public void Resolve_SingletonWithZeroParameterClassInstanceWithImplementationType_ShouldReturnInstanceOfImplementationType()
+        public void Resolve_InstanceWithZeroParameterClassInstanceWithImplementationType_ShouldReturnInstanceOfImplementationType()
         {
             var containerResolver = new ContainerResolver();
-            var objectResolver = new SingletonResolver(new ZeroParameterClass(), containerResolver);
+            var objectResolver = new InstanceResolver(new ZeroParameterClass());
             containerResolver.AddObjectResolver(typeof(ZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(ZeroParameterClass));
             Assert.IsInstanceOf<ZeroParameterClass>(instance);
@@ -39,7 +39,7 @@ namespace DependencyInjection.EditorTests
         }
 
         [Test]
-        public void Resolve_SingletonOfZeroParameterClassWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
+        public void Resolve_SingletonWithZeroParameterClassWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
             var containerResolver = new ContainerResolver();
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver);
@@ -49,7 +49,7 @@ namespace DependencyInjection.EditorTests
         }
 
         [Test]
-        public void Resolve_SingletonOfZeroParameterClassWithImplementationType_ShouldReturnInstanceOfImplementationType()
+        public void Resolve_SingletonWithZeroParameterClassWithImplementationType_ShouldReturnInstanceOfImplementationType()
         {
             var containerResolver = new ContainerResolver();
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver);
@@ -59,7 +59,7 @@ namespace DependencyInjection.EditorTests
         }
 
         [Test]
-        public void Resolve_SingletonOfOneParameterClassWithRegistrationType_ShouldParameterReturnInstanceOfParameterType()
+        public void Resolve_SingletonWithOneParameterClassWithRegistrationType_ShouldParameterReturnInstanceOfParameterType()
         {
             var containerResolver = new ContainerResolver();
             var zeroParameterClassResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver);

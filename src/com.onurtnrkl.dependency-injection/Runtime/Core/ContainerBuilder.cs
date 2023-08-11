@@ -16,9 +16,9 @@ namespace DependencyInjection.Core
             _children = new List<IContainer>();
         }
 
-        public void AddSingleton(Type registrationType, object implementationInstance)
+        public void AddInstance(Type registrationType, object implementationInstance)
         {
-            _containerResolver.AddObjectResolver(registrationType, new SingletonResolver(implementationInstance, _containerResolver));
+            _containerResolver.AddObjectResolver(registrationType, new InstanceResolver(implementationInstance));
         }
 
         public void AddSingleton(Type registrationType, Type implementationType)

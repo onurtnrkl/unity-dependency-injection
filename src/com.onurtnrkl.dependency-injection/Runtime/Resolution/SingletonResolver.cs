@@ -16,11 +16,6 @@ namespace DependencyInjection.Resolution
             _containerResolver = containerResolver;
         }
 
-        public SingletonResolver(object implementationInstance, IContainerResolver containerResolver) : this(implementationInstance.GetType(), containerResolver)
-        {
-            _implementationInstance = implementationInstance;
-        }
-
         public object Resolve()
         {
             if (_implementationInstance == null)

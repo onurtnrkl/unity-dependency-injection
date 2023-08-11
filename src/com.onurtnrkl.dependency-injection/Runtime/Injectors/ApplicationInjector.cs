@@ -12,6 +12,10 @@ namespace DependencyInjection.Injectors
         {
             SceneManager.sceneLoaded -= OnFirstSceneLoaded;
             SceneManager.sceneLoaded += OnFirstSceneLoaded;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
             Application.quitting -= OnApplicationQuit;
             Application.quitting += OnApplicationQuit;
         }
@@ -21,9 +25,17 @@ namespace DependencyInjection.Injectors
             SceneManager.sceneLoaded -= OnFirstSceneLoaded;
             // TODO: Replace resources with addressables
             var applicationInstaller = Resources.Load<ApplicationInstaller>(nameof(ApplicationInstaller));
-            var applicationContainer = ApplicationContainer.CreateInstance(applicationInstaller);
-            var applicationResolver = applicationContainer.Resolver;
-            SceneInjector.Inject(scene, applicationResolver);
+            ApplicationContainer.CreateInstance(applicationInstaller);
+        }
+
+        private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            SceneInjector.Inject(scene);
+        }
+
+        private static void OnSceneUnloaded(Scene scene)
+        {
+            
         }
 
         private static void OnApplicationQuit()

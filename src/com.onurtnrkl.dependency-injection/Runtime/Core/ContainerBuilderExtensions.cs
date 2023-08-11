@@ -4,9 +4,9 @@ namespace DependencyInjection.Core
 {
     internal static class ContainerBuilderExtensions
     {
-        public static void AddSingleton(this IContainerBuilder containerBuilder, object implementationInstance)
+        public static void AddInstance(this IContainerBuilder containerBuilder, object implementationInstance)
         {
-            containerBuilder.AddSingleton(implementationInstance.GetType(), implementationInstance);
+            containerBuilder.AddInstance(implementationInstance.GetType(), implementationInstance);
         }
 
         public static void AddSingleton(this IContainerBuilder containerBuilder, Type implementationType)

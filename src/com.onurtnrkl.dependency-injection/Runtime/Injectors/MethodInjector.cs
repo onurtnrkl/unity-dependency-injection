@@ -17,10 +17,7 @@ namespace DependencyInjection.Injectors
 
             if (!ObjectActivatorCache.TryGet(implementationType, out var objectActivator))
             {
-                if (!TryCreateObjectActivator(implementationType, out objectActivator))
-                {
-                    return;
-                }
+                if (!TryCreateObjectActivator(implementationType, out objectActivator)) return;
 
                 ObjectActivatorCache.Add(implementationType, objectActivator);
             }
@@ -30,19 +27,19 @@ namespace DependencyInjection.Injectors
 
         private static bool TryCreateObjectActivator(Type implementationType, out IObjectActivator objectActivator)
         {
-            if (!TryFindMethodInfo(implementationType, out var constructorInfo))
+            objectActivator = null;
+
+            if (TryFindMethodInfo(implementationType, out var constructorInfo))
             {
-                objectActivator = null;
-                return false;
+                objectActivator = new MethodBaseActivator(constructorInfo);
             }
 
-            objectActivator = new MethodBaseActivator(constructorInfo);
-            return true;
+            return objectActivator != null;
         }
 
         private static bool TryFindMethodInfo(Type implementationType, out MethodInfo foundMethodInfo)
         {
-            foundMethodInfo = default;
+            foundMethodInfo = null;
             var methodInfos = implementationType.GetMethods(MethodBindingFlags);
             var foundParametersCount = int.MinValue;
 
@@ -58,7 +55,7 @@ namespace DependencyInjection.Injectors
                 foundParametersCount = parametersCount;
             }
 
-            return foundMethodInfo != default;
+            return foundMethodInfo != null;
         }
     }
 }
