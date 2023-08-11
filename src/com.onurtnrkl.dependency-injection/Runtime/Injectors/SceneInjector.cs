@@ -15,7 +15,7 @@ namespace DependencyInjection.Injectors
 
             foreach (var gameObject in gameObjects)
             {
-                MethodInjector.Inject(gameObject, containerResolver);
+                GameObjectInjector.Inject(gameObject, containerResolver);
             }
         }
     }

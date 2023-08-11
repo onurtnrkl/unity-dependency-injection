@@ -1,5 +1,4 @@
-﻿using DependencyInjection.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DependencyInjection.Resolution;
 using UnityEngine;
 
@@ -10,9 +9,8 @@ namespace DependencyInjection.Injectors
         public static void Inject(GameObject gameObject, IContainerResolver containerResolver)
         {
             // TODO: GetRootGameObjects causes memory allocation. Use pooling instead.
-            var monoBehaviours = new List<IInstaller>();
+            var monoBehaviours = new List<MonoBehaviour>();
             gameObject.GetComponents(monoBehaviours);
-            monoBehaviours.RemoveAt(0);
 
             foreach (var monoBehaviour in monoBehaviours)
             {
