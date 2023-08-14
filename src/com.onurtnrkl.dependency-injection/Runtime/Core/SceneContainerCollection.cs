@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace DependencyInjection.Core
 {
-    internal static class SceneContainerCollection
+    public static class SceneContainerCollection
     {
         private readonly static Dictionary<Scene, IContainer> s_sceneContainersByScenes = new();
 
@@ -12,12 +12,12 @@ namespace DependencyInjection.Core
             return s_sceneContainersByScenes[scene];
         }
 
-        public static void Add(Scene scene, IContainer sceneContainer)
+        internal static void Add(Scene scene, IContainer sceneContainer)
         {
             s_sceneContainersByScenes.Add(scene, sceneContainer);
         }
 
-        public static void Clear()
+        internal static void Clear()
         {
             s_sceneContainersByScenes.Clear();
         }

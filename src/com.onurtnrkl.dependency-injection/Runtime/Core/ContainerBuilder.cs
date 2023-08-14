@@ -4,7 +4,7 @@ using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Core
 {
-    public sealed class ContainerBuilder : IContainerConfigurer
+    public sealed class ContainerBuilder : IContainerBuilder
     {
         private readonly IContainerResolver _containerResolver;
         private readonly IList<IContainer> _children;
