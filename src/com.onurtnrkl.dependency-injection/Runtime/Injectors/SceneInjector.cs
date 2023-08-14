@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using DependencyInjection.Containers;
-using DependencyInjection.Installers;
+using DependencyInjection.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +9,8 @@ namespace DependencyInjection.Injectors
     {
         public static void Inject(Scene scene)
         {
+            var sceneContainer = SceneContainerCollection.Get(scene);
             // TODO: GetRootGameObjects causes memory allocation. Use pooling instead.
-            var sceneInstaller = Resources.Load<SceneInstaller>($"{scene.name}Installer");
-            SceneContainer.CreateInstance(sceneInstaller);
-            var sceneContainer = SceneContainer.Instance;
             var gameObjects = new List<GameObject>();
             scene.GetRootGameObjects(gameObjects);
 

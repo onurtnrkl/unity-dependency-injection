@@ -1,5 +1,5 @@
-﻿using DependencyInjection.Containers;
-using DependencyInjection.Injectors;
+﻿using DependencyInjection.Core;
+using DependencyInjection.Installers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,13 +20,27 @@ namespace DependencyInjection.Initializers
         private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
-            ApplicationInjector.Inject(scene, loadSceneMode);
+            CreateApplicationContainer();
         }
 
         private static void OnApplicationQuit()
         {
             Application.quitting -= OnApplicationQuit;
-            ApplicationContainer.DestroyInstance();
+            //ApplicationContainerProvider.DestroyInstance();
+        }
+
+        private static void CreateApplicationContainer()
+        {
+            var containerBuilder = new ContainerBuilder();
+            var applicationInstaller = Resources.Load<ApplicationInstaller>(nameof(ApplicationInstaller));
+
+            if (applicationInstaller != null)
+            {
+                applicationInstaller.Install(containerBuilder);
+            }
+
+            var applicationContainer = containerBuilder.Build();
+            ApplicationContainerProvider.Set(applicationContainer);
         }
     }
 }
