@@ -1,6 +1,5 @@
 ﻿using DependencyInjection.Core;
 using DependencyInjection.Injectors;
-using DependencyInjection.Resolution;
 using DependencyInjection.Tests.Fakes;
 using NUnit.Framework;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace DependencyInjection.Tests
     internal sealed class SceneInjectorTests : TestsBase
     {
         [Test]
-        public void Inject_OneParameterMonoBehaviour_ShouldReturnSameInstanceOfParameter()
+        public void Inject_OneParameterMonoBehaviour_ShouldReturnInstanceOfParameter()
         {
             var scene = SceneManager.GetActiveScene();
             var containerBuilder = new ContainerBuilder();
