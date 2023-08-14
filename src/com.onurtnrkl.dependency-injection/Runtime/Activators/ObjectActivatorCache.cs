@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
-using DependencyInjection.Activators;
 
-namespace DependencyInjection.Caching
+namespace DependencyInjection.Activators
 {
     internal static class ObjectActivatorCache
     {

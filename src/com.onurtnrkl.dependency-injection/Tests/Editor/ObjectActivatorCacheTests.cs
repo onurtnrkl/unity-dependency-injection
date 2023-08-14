@@ -1,5 +1,4 @@
-﻿using DependencyInjection.Caching;
-using DependencyInjection.Core;
+﻿using DependencyInjection.Activators;
 using DependencyInjection.EditorTests.Fakes;
 using DependencyInjection.EditorTests.Mocks;
 using NUnit.Framework;
@@ -7,26 +6,14 @@ using NUnit.Framework;
 namespace DependencyInjection.EditorTests
 {
     [TestFixture]
-    internal sealed class ObjectActivatorCacheTests
+    internal sealed class ObjectActivatorCacheTests : TestsBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            ObjectActivatorCache.Clear();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            ObjectActivatorCache.Clear();
-        }
-
         [Test]
         public void TryGet_NotCachedItem_ShouldReturnFalse()
         {
             var actual = ObjectActivatorCache.TryGet(typeof(ZeroParameterClass), out var objectActivator);
             var expected = false;
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using DependencyInjection.Caching;
 using DependencyInjection.EditorTests.Fakes;
 using DependencyInjection.Injectors;
 using DependencyInjection.Resolution;
@@ -7,21 +6,10 @@ using NUnit.Framework;
 
 namespace DependencyInjection.EditorTests
 {
+
     [TestFixture]
-    internal sealed class ConstructorInjectorTests
+    internal sealed class ConstructorInjectorTests : TestsBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            ObjectActivatorCache.Clear();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            ObjectActivatorCache.Clear();
-        }
-
         [Test]
         public void Inject_OneParameterClassWithConstructor_ShouldReturnSameInstanceOfParameter()
         {
@@ -33,7 +21,7 @@ namespace DependencyInjection.EditorTests
             ConstructorInjector.Inject(oneParameterClass, containerResolver);
             var actual = oneParameterClass.GetZeroParameterClass();
             var expected = zeroParameterClass;
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

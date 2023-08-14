@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace DependencyInjection.EditorTests
 {
-    internal sealed class FixedSizeArrayPoolTests
+    internal sealed class FixedSizeArrayPoolTests : TestsBase
     {
         [Test]
         public void Get_WithReferenceType_ShouldBeEmptyAfterUsingScope()
@@ -16,7 +16,7 @@ namespace DependencyInjection.EditorTests
             }
 
             var expected = new object[2];
-            Assert.AreEqual(array, expected);
+            Assert.AreEqual(expected, array);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace DependencyInjection.EditorTests
 
             var actual = FixedSizeArrayPool<object>.Get(2).Length;
             var expected = 2;
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

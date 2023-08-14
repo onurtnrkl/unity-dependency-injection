@@ -27,6 +27,16 @@ namespace DependencyInjection.Pool
             pool.Release(array);
         }
 
+        public static void Clear()
+        {
+            foreach (var pool in s_poolsBySizes.Values)
+            {
+                pool.Clear();
+            }
+
+            s_poolsBySizes.Clear();
+        }
+
         private static IObjectPool<T[]> GetOrCreatePool(int size)
         {
             if (!s_poolsBySizes.TryGetValue(size, out var pool))

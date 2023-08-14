@@ -1,11 +1,10 @@
-﻿using DependencyInjection.Core;
-using DependencyInjection.EditorTests.Fakes;
+﻿using DependencyInjection.EditorTests.Fakes;
 using DependencyInjection.Resolution;
 using NUnit.Framework;
 
 namespace DependencyInjection.EditorTests
 {
-    internal sealed class ContainerResolverTests
+    internal sealed class ContainerResolverTests : TestsBase
     {
         [Test]
         public void Resolve_InstanceWithZeroParameterClassInstanceWithRegistrationType_ShouldReturnInstanceOfRegistrationType()

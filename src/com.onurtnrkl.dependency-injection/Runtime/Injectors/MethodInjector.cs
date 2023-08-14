@@ -2,7 +2,6 @@
 using System.Reflection;
 using DependencyInjection.Activators;
 using DependencyInjection.Attributes;
-using DependencyInjection.Caching;
 using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Injectors
