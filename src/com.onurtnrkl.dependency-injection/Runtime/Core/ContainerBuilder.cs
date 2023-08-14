@@ -4,7 +4,7 @@ using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Core
 {
-    internal sealed class ContainerBuilder : IContainerBuilder
+    public sealed class ContainerBuilder : IContainerConfigurer
     {
         private readonly IContainerResolver _containerResolver;
         private readonly IList<IContainer> _children;
@@ -33,11 +33,6 @@ namespace DependencyInjection.Core
         {
             var objectResolver = new TransientResolver(implementationType, _containerResolver);
             _containerResolver.AddObjectResolver(registrationType, objectResolver);
-        }
-
-        public void AddChild(IContainer child)
-        {
-            _children.Add(child);
         }
 
         public void SetParent(IContainer parent)

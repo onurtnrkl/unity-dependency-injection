@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using DependencyInjection.Core;
+using UnityEngine;
 
-namespace DependencyInjection.Core
+namespace DependencyInjection.Installers
 {
-    internal abstract class MonoInstaller : MonoBehaviour, IMonoInstaller
+    public abstract class MonoInstaller : MonoBehaviour, IMonoInstaller
     {
-        public abstract void Install(IContainerBuilder containerBuilder);
+        public abstract void Install(IContainerConfigurer containerConfigurer);
     }
 }

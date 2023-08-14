@@ -1,7 +1,9 @@
-﻿namespace DependencyInjection.Core
+﻿using DependencyInjection.Core;
+
+namespace DependencyInjection.Installers
 {
     internal interface IInstaller
     {
-        public void Install(IContainerBuilder containerBuilder);
+        public void Install(IContainerConfigurer containerConfigurer);
     }
 }

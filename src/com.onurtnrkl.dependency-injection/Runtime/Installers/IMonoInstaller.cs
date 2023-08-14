@@ -1,4 +1,4 @@
-﻿namespace DependencyInjection.Core
+﻿namespace DependencyInjection.Installers
 {
     internal interface IMonoInstaller : IInstaller
     {

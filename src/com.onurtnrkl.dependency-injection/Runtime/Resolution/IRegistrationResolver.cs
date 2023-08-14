@@ -2,7 +2,7 @@
 
 namespace DependencyInjection.Resolution
 {
-    internal interface IRegistrationResolver
+    public interface IRegistrationResolver
     {
         object Resolve(Type registrationType);
     }
