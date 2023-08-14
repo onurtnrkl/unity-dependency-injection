@@ -1,20 +1,10 @@
 ﻿using DependencyInjection.Containers;
-using DependencyInjection.Installers;
+using DependencyInjection.Injectors;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DependencyInjection.Injectors
+namespace DependencyInjection.Initializers
 {
-    internal static class ApplicationInjector
-    {
-        public static void Inject(Scene scene, LoadSceneMode loadSceneMode)
-        {
-            // TODO: Replace resources with addressables
-            var applicationInstaller = Resources.Load<ApplicationInstaller>(nameof(ApplicationInstaller));
-            ApplicationContainer.CreateInstance(applicationInstaller);
-        }
-    }
-
     internal static class ApplicationInitializer
     {
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -24,6 +14,7 @@ namespace DependencyInjection.Injectors
             SceneManager.sceneLoaded += OnSceneLoaded;
             Application.quitting -= OnApplicationQuit;
             Application.quitting += OnApplicationQuit;
+            SceneInitializer.Initialize();
         }
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
