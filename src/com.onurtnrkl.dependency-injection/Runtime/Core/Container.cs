@@ -6,7 +6,7 @@ namespace DependencyInjection.Core
 {
     internal sealed class Container : IContainer
     {
-        public static readonly IContainer Null = new NullContainer();
+        public static readonly IContainer Empty = new EmptyContainer();
 
         private readonly IContainerResolver _resolver;
         private readonly IList<IContainer> _children;

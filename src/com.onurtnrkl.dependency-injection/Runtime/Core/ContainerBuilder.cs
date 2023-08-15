@@ -12,7 +12,7 @@ namespace DependencyInjection.Core
 
         public ContainerBuilder(IContainer parent)
         {
-            _containerResolver = new ContainerResolver();
+            _containerResolver = new ContainerResolver(parent);
             _children = new List<IContainer>();
             _parent = parent;
         }

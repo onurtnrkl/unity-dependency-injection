@@ -9,7 +9,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Dispose_ParentContainer_ChildContainerResolverShouldReturnNull()
         {
-            var parentBuilder = new ContainerBuilder(Container.Null);
+            var parentBuilder = new ContainerBuilder(Container.Empty);
             parentBuilder.AddSingleton(typeof(ZeroParameterClass));
             var parentContainer = parentBuilder.Build();
             var childBuilder = new ContainerBuilder(parentContainer);
@@ -21,6 +21,21 @@ namespace DependencyInjection.EditorTests
             parentContainer.Dispose();
 
             Assert.IsNull(childOfChildContainer.Resolve(typeof(ClassWithInjectableMethod)));
+        }
+
+        [Test]
+        public void Resolve_ParentImplementationFromChild_ChildContainerResolverShouldReturnInstanceOfParentImplementation()
+        {
+            var parentBuilder = new ContainerBuilder(Container.Empty);
+            var zeroParameterClass = new ZeroParameterClass();
+            parentBuilder.AddInstance(zeroParameterClass);
+            var parentContainer = parentBuilder.Build();
+            var childBuilder = new ContainerBuilder(parentContainer);
+            var childContainer = childBuilder.Build();
+            var expected = zeroParameterClass;
+            var actual = childContainer.Resolve(typeof(ZeroParameterClass));
+
+            Assert.AreSame(expected, actual);
         }
     }
 }

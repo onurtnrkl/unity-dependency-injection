@@ -6,22 +6,22 @@ namespace DependencyInjection.Resolution
     internal sealed class ContainerResolver : IContainerResolver
     {
         private readonly IDictionary<Type, IObjectResolver> _objectResolversByRegistrationTypes;
+        private readonly IRegistrationResolver _parent;
 
-        public ContainerResolver()
+        public ContainerResolver(IRegistrationResolver parent)
         {
             _objectResolversByRegistrationTypes = new Dictionary<Type, IObjectResolver>();
+            _parent = parent;
         }
 
         public object Resolve(Type registrationType)
         {
-            if (!_objectResolversByRegistrationTypes.TryGetValue(registrationType, out var objectResolver))
+            if (_objectResolversByRegistrationTypes.TryGetValue(registrationType, out var objectResolver))
             {
-                return null;
+                return objectResolver.Resolve();
             }
 
-            var implementationInstance = objectResolver.Resolve();
-
-            return implementationInstance;
+            return _parent.Resolve(registrationType);
         }
 
         public void AddObjectResolver(Type registrationType, IObjectResolver objectResolver)

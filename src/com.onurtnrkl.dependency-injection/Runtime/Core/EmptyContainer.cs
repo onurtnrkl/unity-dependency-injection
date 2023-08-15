@@ -2,9 +2,9 @@
 
 namespace DependencyInjection.Core
 {
-    internal sealed class NullContainer : IContainer
+    internal sealed class EmptyContainer : IContainer
     {
-        public NullContainer()
+        public EmptyContainer()
         {
         }
 
@@ -22,7 +22,7 @@ namespace DependencyInjection.Core
 
         public object Resolve(Type registrationType)
         {
-            return default;
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DependencyInjection.EditorTests.Fakes;
+﻿using DependencyInjection.Core;
+using DependencyInjection.EditorTests.Fakes;
 using DependencyInjection.Injectors;
 using DependencyInjection.Resolution;
 using NUnit.Framework;
@@ -10,7 +11,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Inject_ClassWithInjectableMethod_ShouldReturnSameInstanceOfParameter()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var zeroParameterClass = new ZeroParameterClass();
             var objectResolver = new InstanceResolver(zeroParameterClass);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);

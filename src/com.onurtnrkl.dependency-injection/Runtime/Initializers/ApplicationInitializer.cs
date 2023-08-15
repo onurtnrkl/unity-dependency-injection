@@ -26,12 +26,13 @@ namespace DependencyInjection.Initializers
         private static void OnApplicationQuit()
         {
             Application.quitting -= OnApplicationQuit;
-            //ApplicationContainerProvider.DestroyInstance();
+            var applicationContainer = ApplicationContainerProvider.Get();
+            applicationContainer.Dispose();
         }
 
         private static void CreateApplicationContainer()
         {
-            var containerBuilder = new ContainerBuilder(Container.Null);
+            var containerBuilder = new ContainerBuilder(Container.Empty);
             var applicationInstaller = Resources.Load<ApplicationInstaller>(nameof(ApplicationInstaller));
 
             if (applicationInstaller != null)

@@ -1,4 +1,5 @@
-﻿using DependencyInjection.EditorTests.Fakes;
+﻿using DependencyInjection.Core;
+using DependencyInjection.EditorTests.Fakes;
 using DependencyInjection.Resolution;
 using NUnit.Framework;
 
@@ -9,7 +10,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_InstanceWithZeroParameterClassInstanceWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var objectResolver = new InstanceResolver(new ZeroParameterClass());
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(IZeroParameterClass));
@@ -19,7 +20,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_InstanceWithZeroParameterClassInstanceWithImplementationType_ShouldReturnInstanceOfImplementationType()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var objectResolver = new InstanceResolver(new ZeroParameterClass());
             containerResolver.AddObjectResolver(typeof(ZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(ZeroParameterClass));
@@ -29,7 +30,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonMultipleTimes_ShouldReturnSameInstances()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
             var instance1 = containerResolver.Resolve(typeof(IZeroParameterClass));
@@ -40,7 +41,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonWithZeroParameterClassWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(IZeroParameterClass));
@@ -50,7 +51,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonWithZeroParameterClassWithImplementationType_ShouldReturnInstanceOfImplementationType()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver);
             containerResolver.AddObjectResolver(typeof(ZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(ZeroParameterClass));
@@ -60,7 +61,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonWithOneParameterClassWithRegistrationType_ShouldParameterReturnInstanceOfParameterType()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var zeroParameterClassResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver);
             var oneParameterClassResolver = new SingletonResolver(typeof(OneParameterClass), containerResolver);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), zeroParameterClassResolver);
@@ -73,7 +74,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_TransientMultipleTimes_ShouldReturnDifferentInstances()
         {
-            var containerResolver = new ContainerResolver();
+            var containerResolver = new ContainerResolver(Container.Empty);
             var zeroParameterClassResolver = new TransientResolver(typeof(ZeroParameterClass), containerResolver);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), zeroParameterClassResolver);
             var instance1 = containerResolver.Resolve(typeof(IZeroParameterClass));
