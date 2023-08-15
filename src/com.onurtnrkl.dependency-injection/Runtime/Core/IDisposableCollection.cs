@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DependencyInjection.Resolution
+namespace DependencyInjection.Core
 {
     internal interface IDisposableCollection : IDisposable
     {

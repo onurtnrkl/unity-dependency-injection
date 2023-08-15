@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace DependencyInjection.Resolution
+namespace DependencyInjection.Core
 {
     internal sealed class DisposableCollection : IDisposableCollection
     {

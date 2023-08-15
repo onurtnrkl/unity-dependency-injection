@@ -1,4 +1,4 @@
-﻿using DependencyInjection.Resolution;
+﻿using DependencyInjection.Core;
 
 namespace DependencyInjection.EditorTests.Mocks
 {
