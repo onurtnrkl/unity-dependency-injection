@@ -14,8 +14,12 @@ namespace DependencyInjection.Resolution
 
         public object Resolve(Type registrationType)
         {
-            var resolver = _objectResolversByRegistrationTypes[registrationType];
-            var implementationInstance = resolver.Resolve();
+            if (!_objectResolversByRegistrationTypes.TryGetValue(registrationType, out var objectResolver))
+            {
+                return null;
+            }
+
+            var implementationInstance = objectResolver.Resolve();
 
             return implementationInstance;
         }

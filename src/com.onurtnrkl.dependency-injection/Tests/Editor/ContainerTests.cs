@@ -7,26 +7,20 @@ namespace DependencyInjection.EditorTests
     internal sealed class ContainerTests : TestsBase
     {
         [Test]
-        public void Dispose_ParentContainer_ChildContainerShouldBeNull()
+        public void Dispose_ParentContainer_ChildContainerResolverShouldReturnNull()
         {
             var parentBuilder = new ContainerBuilder(Container.Null);
             parentBuilder.AddSingleton(typeof(ZeroParameterClass));
-            parentBuilder.AddSingleton(typeof(OneParameterClass));
-            var childContainer = default(IContainer);
+            var parentContainer = parentBuilder.Build();
+            var childBuilder = new ContainerBuilder(parentContainer);
+            childBuilder.AddSingleton(typeof(OneParameterClass));
+            var childContainer = childBuilder.Build();
+            var childOfChildBuilder = new ContainerBuilder(childContainer);
+            childOfChildBuilder.AddSingleton(typeof(ClassWithInjectableMethod));
+            var childOfChildContainer = childOfChildBuilder.Build();
+            parentContainer.Dispose();
 
-            using (var parentContainer = parentBuilder.Build())
-            {
-                var childBuilder = new ContainerBuilder(parentContainer);
-                childBuilder.AddSingleton(typeof(ZeroParameterClass));
-                childBuilder.AddSingleton(typeof(OneParameterClass));
-
-                using (childContainer = childBuilder.Build())
-                {
-
-                }
-            }
-
-            Assert.IsNull(childContainer);
+            Assert.IsNull(childOfChildContainer.Resolve(typeof(ClassWithInjectableMethod)));
         }
     }
 }

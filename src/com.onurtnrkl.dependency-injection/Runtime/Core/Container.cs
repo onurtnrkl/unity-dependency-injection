@@ -21,15 +21,15 @@ namespace DependencyInjection.Core
 
         public void Dispose()
         {
-            _parent.RemoveChild(this);
-
-            foreach (var child in _children)
+            for (var i = _children.Count - 1; i >= 0; i--)
             {
+                var child = _children[i];
                 child.Dispose();
             }
 
             _resolver.Clear();
             _children.Clear();
+            _parent.RemoveChild(this);
         }
 
         public void AddChild(IContainer child)
