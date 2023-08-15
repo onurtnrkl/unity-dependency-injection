@@ -8,13 +8,13 @@ namespace DependencyInjection.Core
     {
         private readonly IContainerResolver _containerResolver;
         private readonly IList<IContainer> _children;
-        private IContainer _parent;
+        private readonly IContainer _parent;
 
-        public ContainerBuilder()
+        public ContainerBuilder(IContainer parent)
         {
             _containerResolver = new ContainerResolver();
             _children = new List<IContainer>();
-            // TODO: Set application container as parent
+            _parent = parent;
         }
 
         public void AddInstance(Type registrationType, object implementationInstance)
@@ -35,15 +35,10 @@ namespace DependencyInjection.Core
             _containerResolver.AddObjectResolver(registrationType, objectResolver);
         }
 
-        public void SetParent(IContainer parent)
-        {
-            _parent = parent;
-        }
-
         public IContainer Build()
         {
             var container = new Container(_containerResolver, _children, _parent);
-
+            _parent.AddChild(container);
             return container;
         }
     }

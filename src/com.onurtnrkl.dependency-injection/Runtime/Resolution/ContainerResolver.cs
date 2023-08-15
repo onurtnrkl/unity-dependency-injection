@@ -15,14 +15,19 @@ namespace DependencyInjection.Resolution
         public object Resolve(Type registrationType)
         {
             var resolver = _objectResolversByRegistrationTypes[registrationType];
-            var implementation = resolver.Resolve();
+            var implementationInstance = resolver.Resolve();
 
-            return implementation;
+            return implementationInstance;
         }
 
         public void AddObjectResolver(Type registrationType, IObjectResolver objectResolver)
         {
             _objectResolversByRegistrationTypes.Add(registrationType, objectResolver);
+        }
+
+        public void Clear()
+        {
+            _objectResolversByRegistrationTypes.Clear();
         }
     }
 }

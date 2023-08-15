@@ -31,7 +31,7 @@ namespace DependencyInjection.Initializers
 
         private static void CreateApplicationContainer()
         {
-            var containerBuilder = new ContainerBuilder();
+            var containerBuilder = new ContainerBuilder(Container.Null);
             var applicationInstaller = Resources.Load<ApplicationInstaller>(nameof(ApplicationInstaller));
 
             if (applicationInstaller != null)

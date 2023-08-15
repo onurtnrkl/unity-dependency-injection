@@ -24,7 +24,8 @@ namespace DependencyInjection.Initializers
 
         private static void CreateSceneContainer(Scene scene)
         {
-            var containerBuilder = new ContainerBuilder();
+            var applicationContainer = ApplicationContainerProvider.Get();
+            var containerBuilder = new ContainerBuilder(applicationContainer);
             var sceneInstaller = Resources.Load<SceneInstaller>($"{scene.name}Installer");
 
             if (sceneInstaller != null)
@@ -32,8 +33,6 @@ namespace DependencyInjection.Initializers
                 sceneInstaller.Install(containerBuilder);
             }
 
-            var applicationContainer = ApplicationContainerProvider.Get();
-            containerBuilder.SetParent(applicationContainer);
             var sceneContainer = containerBuilder.Build();
             applicationContainer.AddChild(sceneContainer);
             SceneContainerCollection.Add(scene, sceneContainer);

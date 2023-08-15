@@ -6,6 +6,8 @@ namespace DependencyInjection.Core
 {
     internal sealed class Container : IContainer
     {
+        public static readonly IContainer Null = new NullContainer();
+
         private readonly IContainerResolver _resolver;
         private readonly IList<IContainer> _children;
         private readonly IContainer _parent;
@@ -15,6 +17,19 @@ namespace DependencyInjection.Core
             _resolver = resolver;
             _children = children;
             _parent = parent;
+        }
+
+        public void Dispose()
+        {
+            _parent.RemoveChild(this);
+
+            foreach (var child in _children)
+            {
+                child.Dispose();
+            }
+
+            _resolver.Clear();
+            _children.Clear();
         }
 
         public void AddChild(IContainer child)
