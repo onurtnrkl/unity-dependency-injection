@@ -24,6 +24,33 @@ namespace DependencyInjection.EditorTests
         }
 
         [Test]
+        public void Dispose_Container_ResolvedDisposableShouldBeDisposed()
+        {
+            var containerBuilder = new ContainerBuilder(Container.Empty);
+            containerBuilder.AddSingleton(typeof(IDisposableClass), typeof(DisposableClass));
+            var container = containerBuilder.Build();
+            var disposableInstance = (IDisposableClass)container.Resolve(typeof(IDisposableClass));
+            container.Dispose();
+
+            Assert.IsTrue(disposableInstance.Disposed);
+        }
+
+        [Test]
+        public void Dispose_ParentContainer_ResolvedChildDisposableShouldBeDisposed()
+        {
+            var parentBuilder = new ContainerBuilder(Container.Empty);
+            parentBuilder.AddSingleton(typeof(ZeroParameterClass));
+            var parentContainer = parentBuilder.Build();
+            var childBuilder = new ContainerBuilder(parentContainer);
+            childBuilder.AddSingleton(typeof(IDisposableClass), typeof(DisposableClass));
+            var childContainer = childBuilder.Build();
+            var disposableInstance = (IDisposableClass)childContainer.Resolve(typeof(IDisposableClass));
+            parentContainer.Dispose();
+
+            Assert.IsTrue(disposableInstance.Disposed);
+        }
+
+        [Test]
         public void Resolve_ParentImplementationFromChild_ChildContainerResolverShouldReturnInstanceOfParentImplementation()
         {
             var parentBuilder = new ContainerBuilder(Container.Empty);

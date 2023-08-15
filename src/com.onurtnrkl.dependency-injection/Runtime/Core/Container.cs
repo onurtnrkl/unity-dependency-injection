@@ -9,18 +9,22 @@ namespace DependencyInjection.Core
         public static readonly IContainer Empty = new EmptyContainer();
 
         private readonly IContainerResolver _resolver;
+        private readonly IDisposableCollection _disposables;
         private readonly IList<IContainer> _children;
         private readonly IContainer _parent;
 
-        public Container(IContainerResolver resolver, IList<IContainer> children, IContainer parent)
+        public Container(IContainerResolver resolver, IDisposableCollection disposables, IList<IContainer> children, IContainer parent)
         {
             _resolver = resolver;
+            _disposables = disposables;
             _children = children;
             _parent = parent;
         }
 
         public void Dispose()
         {
+            _disposables.Dispose();
+
             for (var i = _children.Count - 1; i >= 0; i--)
             {
                 var child = _children[i];
