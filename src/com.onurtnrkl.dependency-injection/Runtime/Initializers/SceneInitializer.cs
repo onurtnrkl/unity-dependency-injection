@@ -43,7 +43,7 @@ namespace DependencyInjection.Initializers
             var applicationContainer = ApplicationContainerProvider.Get();
             var sceneContainer = SceneContainerCollection.Get(scene);
             applicationContainer.RemoveChild(sceneContainer);
-            //sceneContainer.Dispose();
+            sceneContainer.Dispose();
         }
     }
 }
