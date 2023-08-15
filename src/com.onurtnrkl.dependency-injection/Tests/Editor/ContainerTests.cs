@@ -9,17 +9,16 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Dispose_ParentContainer_ChildContainerShouldBeNull()
         {
-            var parentBuilder = new ContainerBuilder();
+            var parentBuilder = new ContainerBuilder(Container.Null);
             parentBuilder.AddSingleton(typeof(ZeroParameterClass));
             parentBuilder.AddSingleton(typeof(OneParameterClass));
             var childContainer = default(IContainer);
 
             using (var parentContainer = parentBuilder.Build())
             {
-                var childBuilder = new ContainerBuilder();
+                var childBuilder = new ContainerBuilder(parentContainer);
                 childBuilder.AddSingleton(typeof(ZeroParameterClass));
                 childBuilder.AddSingleton(typeof(OneParameterClass));
-                childBuilder.SetParent(parentContainer);
 
                 using (childContainer = childBuilder.Build())
                 {
