@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace DependencyInjection.EditorTests
 {
-    [TestFixture]
     internal sealed class ObjectActivatorCacheTests : TestsBase
     {
         [Test]

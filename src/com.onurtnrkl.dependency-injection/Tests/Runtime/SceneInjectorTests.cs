@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 namespace DependencyInjection.Tests
 {
-    [TestFixture]
     internal sealed class SceneInjectorTests : TestsBase
     {
         [Test]

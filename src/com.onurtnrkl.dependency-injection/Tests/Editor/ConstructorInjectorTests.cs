@@ -6,8 +6,6 @@ using NUnit.Framework;
 
 namespace DependencyInjection.EditorTests
 {
-
-    [TestFixture]
     internal sealed class ConstructorInjectorTests : TestsBase
     {
         [Test]
