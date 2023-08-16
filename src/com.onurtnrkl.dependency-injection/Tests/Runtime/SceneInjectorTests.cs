@@ -13,7 +13,7 @@ namespace DependencyInjection.Tests
         public void Inject_OneParameterMonoBehaviour_ShouldReturnInstanceOfParameter()
         {
             var scene = SceneManager.GetActiveScene();
-            var containerBuilder = new ContainerBuilder(Container.Empty);
+            var containerBuilder = new ContainerBuilder(Container.Root);
             var zeroParameterClass = new ZeroParameterClass();
             containerBuilder.AddInstance(typeof(IZeroParameterClass), zeroParameterClass);
             var sceneContainer = containerBuilder.Build();

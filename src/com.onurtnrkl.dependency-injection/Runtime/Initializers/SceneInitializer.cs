@@ -1,6 +1,6 @@
-﻿using DependencyInjection.Core;
+﻿using System.Collections.Generic;
+using DependencyInjection.Core;
 using DependencyInjection.Injectors;
-using DependencyInjection.Installers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,22 +18,25 @@ namespace DependencyInjection.Initializers
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            CreateSceneContainer(scene);
-            SceneInjector.Inject(scene);
+            var rootGameObjects = new List<GameObject>();
+            scene.GetRootGameObjects(rootGameObjects);
+            CreateSceneContainer(scene, rootGameObjects);
+            SceneInjector.Inject(scene, rootGameObjects);
         }
 
-        private static void CreateSceneContainer(Scene scene)
+        private static void CreateSceneContainer(Scene scene, IEnumerable<GameObject> rootGameObjects)
         {
             var applicationContainer = ApplicationContainerProvider.Get();
-            var containerBuilder = new ContainerBuilder(applicationContainer);
-            var sceneInstaller = Resources.Load<SceneInstaller>($"{scene.name}Installer");
+            var sceneContainerBuilder = new ContainerBuilder(applicationContainer);
 
-            if (sceneInstaller != null)
+            foreach (var rootGameObject in rootGameObjects)
             {
-                sceneInstaller.Install(containerBuilder);
+                if (!rootGameObject.TryGetComponent<Installer>(out var installer)) continue;
+
+                installer.Install(sceneContainerBuilder);
             }
 
-            var sceneContainer = containerBuilder.Build();
+            var sceneContainer = sceneContainerBuilder.Build();
             applicationContainer.AddChild(sceneContainer);
             SceneContainerCollection.Add(scene, sceneContainer);
         }

@@ -11,7 +11,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Inject_ClassWithInjectableMethod_ShouldReturnSameInstanceOfParameter()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var zeroParameterClass = new ZeroParameterClass();
             var objectResolver = new InstanceResolver(zeroParameterClass);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);

@@ -3,5 +3,8 @@
   "version": "0.0.0",
   "displayName": "Dependency Injection",
   "description": "Minimal dependency injection library",
-  "unity": "2023.1"
+  "unity": "2023.1",
+  "dependencies": {
+    "com.unity.addressables": "1.21.15"
+  }
 }

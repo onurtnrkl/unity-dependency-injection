@@ -11,7 +11,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_InstanceWithZeroParameterClassInstanceWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var objectResolver = new InstanceResolver(new ZeroParameterClass());
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(IZeroParameterClass));
@@ -21,7 +21,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_InstanceWithZeroParameterClassInstanceWithImplementationType_ShouldReturnInstanceOfImplementationType()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var objectResolver = new InstanceResolver(new ZeroParameterClass());
             containerResolver.AddObjectResolver(typeof(ZeroParameterClass), objectResolver);
             var instance = containerResolver.Resolve(typeof(ZeroParameterClass));
@@ -31,7 +31,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonMultipleTimes_ShouldReturnSameInstances()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var disposableCollection = new MockDisposableCollection();
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver, disposableCollection);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
@@ -43,7 +43,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonWithZeroParameterClassWithRegistrationType_ShouldReturnInstanceOfRegistrationType()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var disposableCollection = new MockDisposableCollection();
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver, disposableCollection);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
@@ -54,7 +54,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonWithZeroParameterClassWithImplementationType_ShouldReturnInstanceOfImplementationType()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var disposableCollection = new MockDisposableCollection();
             var objectResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver, disposableCollection);
             containerResolver.AddObjectResolver(typeof(ZeroParameterClass), objectResolver);
@@ -65,7 +65,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_SingletonWithOneParameterClassWithRegistrationType_ShouldParameterReturnInstanceOfParameterType()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var disposableCollection = new MockDisposableCollection();
             var zeroParameterClassResolver = new SingletonResolver(typeof(ZeroParameterClass), containerResolver, disposableCollection);
             var oneParameterClassResolver = new SingletonResolver(typeof(OneParameterClass), containerResolver, disposableCollection);
@@ -79,7 +79,7 @@ namespace DependencyInjection.EditorTests
         [Test]
         public void Resolve_TransientMultipleTimes_ShouldReturnDifferentInstances()
         {
-            var containerResolver = new ContainerResolver(Container.Empty);
+            var containerResolver = new ContainerResolver(Container.Root);
             var disposableCollection = new MockDisposableCollection();
             var zeroParameterClassResolver = new TransientResolver(typeof(ZeroParameterClass), containerResolver, disposableCollection);
             containerResolver.AddObjectResolver(typeof(IZeroParameterClass), zeroParameterClassResolver);

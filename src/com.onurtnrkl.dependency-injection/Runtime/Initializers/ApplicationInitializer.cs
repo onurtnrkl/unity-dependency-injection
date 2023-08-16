@@ -1,6 +1,7 @@
 ﻿using DependencyInjection.Core;
-using DependencyInjection.Installers;
+using DependencyInjection.Utilities;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 namespace DependencyInjection.Initializers
@@ -32,14 +33,16 @@ namespace DependencyInjection.Initializers
 
         private static void CreateApplicationContainer()
         {
-            var containerBuilder = new ContainerBuilder(Container.Empty);
-            var applicationInstaller = Resources.Load<ApplicationInstaller>(nameof(ApplicationInstaller));
+            var containerBuilder = new ContainerBuilder(Container.Root);
+            var loadInstallerHandle = AddressablesUtilities.LoadComponentAsync<Installer>("ApplicationInstaller");
+            var installer = loadInstallerHandle.WaitForCompletion();
 
-            if (applicationInstaller != null)
+            if (installer != null)
             {
-                applicationInstaller.Install(containerBuilder);
+                installer.Install(containerBuilder);
             }
 
+            Addressables.Release(loadInstallerHandle);
             var applicationContainer = containerBuilder.Build();
             ApplicationContainerProvider.Set(applicationContainer);
         }

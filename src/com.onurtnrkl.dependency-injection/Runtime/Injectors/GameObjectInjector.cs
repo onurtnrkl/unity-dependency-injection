@@ -8,13 +8,12 @@ namespace DependencyInjection.Injectors
     {
         public static void Inject(GameObject gameObject, IRegistrationResolver registrationResolver)
         {
-            // TODO: GetRootGameObjects causes memory allocation. Use pooling instead.
-            var monoBehaviours = new List<MonoBehaviour>();
-            gameObject.GetComponents(monoBehaviours);
+            var components = new List<Component>();
+            gameObject.GetComponents(components);
 
-            foreach (var monoBehaviour in monoBehaviours)
+            foreach (var component in components)
             {
-                MethodInjector.Inject(monoBehaviour, registrationResolver);
+                MethodInjector.Inject(component, registrationResolver);
             }
         }
     }

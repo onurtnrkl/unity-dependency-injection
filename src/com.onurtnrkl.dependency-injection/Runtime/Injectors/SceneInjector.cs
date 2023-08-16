@@ -9,14 +9,18 @@ namespace DependencyInjection.Injectors
     {
         public static void Inject(Scene scene)
         {
-            var sceneContainer = SceneContainerCollection.Get(scene);
-            // TODO: GetRootGameObjects causes memory allocation. Use pooling instead.
-            var gameObjects = new List<GameObject>();
-            scene.GetRootGameObjects(gameObjects);
+            var rootGameObjects = new List<GameObject>();
+            scene.GetRootGameObjects(rootGameObjects);
+            Inject(scene, rootGameObjects);
+        }
 
-            foreach (var gameObject in gameObjects)
+        public static void Inject(Scene scene, IEnumerable<GameObject> rootGameObjects)
+        {
+            var sceneContainer = SceneContainerCollection.Get(scene);
+
+            foreach (var rootGameObject in rootGameObjects)
             {
-                GameObjectInjector.Inject(gameObject, sceneContainer);
+                GameObjectInjector.Inject(rootGameObject, sceneContainer);
             }
         }
     }

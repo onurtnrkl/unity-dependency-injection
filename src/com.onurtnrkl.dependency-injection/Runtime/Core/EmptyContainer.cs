@@ -2,9 +2,9 @@
 
 namespace DependencyInjection.Core
 {
-    internal sealed class EmptyContainer : IContainer
+    internal sealed class RootContainer : IContainer
     {
-        public EmptyContainer()
+        public RootContainer()
         {
         }
 
