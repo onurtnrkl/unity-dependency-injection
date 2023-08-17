@@ -18,27 +18,28 @@ namespace DependencyInjection.Initializers
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            var rootGameObjects = new List<GameObject>();
-            scene.GetRootGameObjects(rootGameObjects);
-            CreateSceneContainer(scene, rootGameObjects);
-            SceneInjector.Inject(scene, rootGameObjects);
+            CreateSceneContainer(scene);
+            SceneInjector.Inject(scene);
         }
 
-        private static void CreateSceneContainer(Scene scene, IEnumerable<GameObject> rootGameObjects)
+        private static void CreateSceneContainer(Scene scene)
         {
             var applicationContainer = ApplicationContainerProvider.Get();
             var sceneContainerBuilder = new ContainerBuilder(applicationContainer);
+            var rootGameObjects = new List<GameObject>();
+            scene.GetRootGameObjects(rootGameObjects);
 
             foreach (var rootGameObject in rootGameObjects)
             {
                 if (!rootGameObject.TryGetComponent<Installer>(out var installer)) continue;
 
                 installer.Install(sceneContainerBuilder);
+                break;
             }
 
             var sceneContainer = sceneContainerBuilder.Build();
-            applicationContainer.AddChild(sceneContainer);
             SceneContainerCollection.Add(scene, sceneContainer);
+            applicationContainer.AddChild(sceneContainer);
         }
 
         private static void OnSceneUnloaded(Scene scene)

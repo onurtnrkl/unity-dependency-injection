@@ -9,14 +9,9 @@ namespace DependencyInjection.Injectors
     {
         public static void Inject(Scene scene)
         {
+            var sceneContainer = SceneContainerCollection.Get(scene);
             var rootGameObjects = new List<GameObject>();
             scene.GetRootGameObjects(rootGameObjects);
-            Inject(scene, rootGameObjects);
-        }
-
-        public static void Inject(Scene scene, IEnumerable<GameObject> rootGameObjects)
-        {
-            var sceneContainer = SceneContainerCollection.Get(scene);
 
             foreach (var rootGameObject in rootGameObjects)
             {
