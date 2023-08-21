@@ -1,6 +1,6 @@
 ﻿namespace DependencyInjection.Resolution
 {
-    internal sealed class InstanceResolver : IObjectResolver
+    internal sealed class InstanceResolver : IInstanceResolver
     {
         private readonly object _implementationInstance;
 

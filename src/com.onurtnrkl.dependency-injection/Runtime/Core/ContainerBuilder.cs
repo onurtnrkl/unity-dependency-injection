@@ -21,20 +21,22 @@ namespace DependencyInjection.Core
 
         public void AddInstance(Type registrationType, object implementationInstance)
         {
-            var objectResolver = new InstanceResolver(implementationInstance);
-            _containerResolver.AddObjectResolver(registrationType, objectResolver);
+            var instanceResolver = new InstanceResolver(implementationInstance);
+            _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
         }
 
         public void AddSingleton(Type registrationType, Type implementationType)
         {
-            var objectResolver = new SingletonResolver(implementationType, _containerResolver, _disposableCollection);
-            _containerResolver.AddObjectResolver(registrationType, objectResolver);
+            var objectResolver = new ObjectResolver(implementationType, _containerResolver, _disposableCollection);
+            var instanceResolver = new SingletonResolver(objectResolver);
+            _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
         }
 
         public void AddTransient(Type registrationType, Type implementationType)
         {
-            var objectResolver = new TransientResolver(implementationType, _containerResolver, _disposableCollection);
-            _containerResolver.AddObjectResolver(registrationType, objectResolver);
+            var objectResolver = new ObjectResolver(implementationType, _containerResolver, _disposableCollection);
+            var instanceResolver = new TransientResolver(objectResolver);
+            _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
         }
 
         public IContainer Build()

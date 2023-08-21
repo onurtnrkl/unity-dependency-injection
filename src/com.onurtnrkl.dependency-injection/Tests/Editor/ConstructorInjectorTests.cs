@@ -15,7 +15,7 @@ namespace DependencyInjection.EditorTests
             var containerResolver = new ContainerResolver(Container.Root);
             var zeroParameterClass = new ZeroParameterClass();
             var objectResolver = new InstanceResolver(zeroParameterClass);
-            containerResolver.AddObjectResolver(typeof(IZeroParameterClass), objectResolver);
+            containerResolver.AddInstanceResolver(typeof(IZeroParameterClass), objectResolver);
             var oneParameterClass = (OneParameterClass)RuntimeHelpers.GetUninitializedObject(typeof(OneParameterClass));
             ConstructorInjector.Inject(oneParameterClass, containerResolver);
             var actual = oneParameterClass.GetZeroParameterClass();

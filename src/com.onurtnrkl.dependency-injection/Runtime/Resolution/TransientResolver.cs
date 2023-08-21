@@ -1,30 +1,17 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using DependencyInjection.Core;
-using DependencyInjection.Injectors;
-
-namespace DependencyInjection.Resolution
+﻿namespace DependencyInjection.Resolution
 {
-    internal sealed class TransientResolver : IObjectResolver
+    internal sealed class TransientResolver : IInstanceResolver
     {
-        private readonly Type _implementationType;
-        private readonly IRegistrationResolver _registrationResolver;
-        private readonly IDisposableCollection _disposableCollection;
+        private readonly IObjectResolver _objectResolver;
 
-        public TransientResolver(Type implementationType, IRegistrationResolver registrationResolver, IDisposableCollection disposableCollection)
+        public TransientResolver(IObjectResolver objectResolver)
         {
-            _implementationType = implementationType;
-            _registrationResolver = registrationResolver;
-            _disposableCollection = disposableCollection;
+            _objectResolver = objectResolver;
         }
 
         public object Resolve()
         {
-            var implementationInstance = RuntimeHelpers.GetUninitializedObject(_implementationType);
-            ConstructorInjector.Inject(implementationInstance, _registrationResolver);
-            _disposableCollection.TryAdd(implementationInstance);
-
-            return implementationInstance;
+            return _objectResolver.Resolve();
         }
     }
 }

@@ -4,7 +4,7 @@ namespace DependencyInjection.Resolution
 {
     internal interface IContainerResolver : IRegistrationResolver
     {
-        void AddObjectResolver(Type registrationType, IObjectResolver objectResolver);
+        void AddInstanceResolver(Type registrationType, IInstanceResolver instanceResolver);
         void Clear();
     }
 }

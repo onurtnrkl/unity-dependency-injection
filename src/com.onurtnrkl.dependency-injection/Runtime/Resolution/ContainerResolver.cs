@@ -5,33 +5,33 @@ namespace DependencyInjection.Resolution
 {
     internal sealed class ContainerResolver : IContainerResolver
     {
-        private readonly IDictionary<Type, IObjectResolver> _objectResolversByRegistrationTypes;
+        private readonly IDictionary<Type, IInstanceResolver> _instanceResolversByRegistrationTypes;
         private readonly IRegistrationResolver _parent;
 
         public ContainerResolver(IRegistrationResolver parent)
         {
-            _objectResolversByRegistrationTypes = new Dictionary<Type, IObjectResolver>();
+            _instanceResolversByRegistrationTypes = new Dictionary<Type, IInstanceResolver>();
             _parent = parent;
         }
 
         public object Resolve(Type registrationType)
         {
-            if (_objectResolversByRegistrationTypes.TryGetValue(registrationType, out var objectResolver))
+            if (_instanceResolversByRegistrationTypes.TryGetValue(registrationType, out var instanceResolver))
             {
-                return objectResolver.Resolve();
+                return instanceResolver.Resolve();
             }
 
             return _parent.Resolve(registrationType);
         }
 
-        public void AddObjectResolver(Type registrationType, IObjectResolver objectResolver)
+        public void AddInstanceResolver(Type registrationType, IInstanceResolver instanceResolver)
         {
-            _objectResolversByRegistrationTypes.Add(registrationType, objectResolver);
+            _instanceResolversByRegistrationTypes.Add(registrationType, instanceResolver);
         }
 
         public void Clear()
         {
-            _objectResolversByRegistrationTypes.Clear();
+            _instanceResolversByRegistrationTypes.Clear();
         }
     }
 }

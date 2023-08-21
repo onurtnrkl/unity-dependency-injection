@@ -1,32 +1,18 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using DependencyInjection.Core;
-using DependencyInjection.Injectors;
-
-namespace DependencyInjection.Resolution
+﻿namespace DependencyInjection.Resolution
 {
-    internal sealed class SingletonResolver : IObjectResolver
+    internal sealed class SingletonResolver : IInstanceResolver
     {
-        private readonly Type _implementationType;
-        private readonly IRegistrationResolver _registrationResolver;
-        private readonly IDisposableCollection _disposableCollection;
+        private readonly IObjectResolver _objectResolver;
         private object _implementationInstance;
 
-        public SingletonResolver(Type implementationType, IRegistrationResolver registrationResolver, IDisposableCollection disposableCollection)
+        public SingletonResolver(IObjectResolver objectResolver)
         {
-            _implementationType = implementationType;
-            _registrationResolver = registrationResolver;
-            _disposableCollection = disposableCollection;
+            _objectResolver = objectResolver;
         }
 
         public object Resolve()
         {
-            if (_implementationInstance == null)
-            {
-                _implementationInstance = RuntimeHelpers.GetUninitializedObject(_implementationType);
-                ConstructorInjector.Inject(_implementationInstance, _registrationResolver);
-                _disposableCollection.TryAdd(_implementationInstance);
-            }
+            _implementationInstance ??= _objectResolver.Resolve();
 
             return _implementationInstance;
         }
