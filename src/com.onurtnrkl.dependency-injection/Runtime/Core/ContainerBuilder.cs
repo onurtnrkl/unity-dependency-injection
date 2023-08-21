@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using DependencyInjection.Resolution;
+using UnityEngine;
 
 namespace DependencyInjection.Core
 {
     public sealed class ContainerBuilder : IContainerBuilder
     {
         private readonly IContainerResolver _containerResolver;
+        private readonly IInitializableCollection _initializableCollection;
         private readonly IDisposableCollection _disposableCollection;
         private readonly IList<IContainer> _children;
         private readonly IContainer _parent;
@@ -14,6 +16,7 @@ namespace DependencyInjection.Core
         public ContainerBuilder(IContainer parent)
         {
             _containerResolver = new ContainerResolver(parent);
+            _initializableCollection = new InitializableCollection(_containerResolver);
             _disposableCollection = new DisposableCollection();
             _children = new List<IContainer>();
             _parent = parent;
@@ -30,6 +33,15 @@ namespace DependencyInjection.Core
             var objectResolver = new ObjectResolver(implementationType, _containerResolver, _disposableCollection);
             var instanceResolver = new SingletonResolver(objectResolver);
             _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
+            _initializableCollection.TryAdd(registrationType, implementationType);
+        }
+
+        public void AddSingleton(Type registrationType, Type implementationType, GameObject prefab)
+        {
+            var objectResolver = new PrefabResolver(implementationType, prefab, _containerResolver, _disposableCollection);
+            var instanceResolver = new SingletonResolver(objectResolver);
+            _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
+            _initializableCollection.TryAdd(registrationType, implementationType);
         }
 
         public void AddTransient(Type registrationType, Type implementationType)
@@ -37,12 +49,14 @@ namespace DependencyInjection.Core
             var objectResolver = new ObjectResolver(implementationType, _containerResolver, _disposableCollection);
             var instanceResolver = new TransientResolver(objectResolver);
             _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
+            _initializableCollection.TryAdd(registrationType, implementationType);
         }
 
         public IContainer Build()
         {
             var container = new Container(_containerResolver, _disposableCollection, _children, _parent);
             _parent.AddChild(container);
+            _initializableCollection.Initialize();
             return container;
         }
     }
