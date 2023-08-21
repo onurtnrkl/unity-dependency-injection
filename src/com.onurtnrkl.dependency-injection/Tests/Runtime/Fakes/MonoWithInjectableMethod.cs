@@ -1,4 +1,4 @@
-﻿using DependencyInjection.Attributes;
+﻿using DependencyInjection.Core;
 using UnityEngine;
 
 namespace DependencyInjection.Tests.Fakes

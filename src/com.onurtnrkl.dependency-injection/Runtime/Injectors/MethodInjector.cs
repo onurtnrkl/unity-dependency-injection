@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using DependencyInjection.Activators;
-using DependencyInjection.Attributes;
+using DependencyInjection.Core;
 using DependencyInjection.Resolution;
 
 namespace DependencyInjection.Injectors

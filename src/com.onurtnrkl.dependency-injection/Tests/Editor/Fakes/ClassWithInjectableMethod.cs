@@ -1,4 +1,4 @@
-﻿using DependencyInjection.Attributes;
+﻿using DependencyInjection.Core;
 
 namespace DependencyInjection.EditorTests.Fakes
 {
