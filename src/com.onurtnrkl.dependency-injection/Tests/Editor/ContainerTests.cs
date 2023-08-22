@@ -7,6 +7,17 @@ namespace DependencyInjection.EditorTests
     internal sealed class ContainerTests : TestsBase
     {
         [Test]
+        public void Build_Container_InitializableClassShouldBeInitialized()
+        {
+            var containerBuilder = new ContainerBuilder(Container.Root);
+            containerBuilder.AddSingleton(typeof(IInitializableClass), typeof(InitializableClass));
+            var container = containerBuilder.Build();
+            var initializableInstance = (IInitializableClass)container.Resolve(typeof(IInitializableClass));
+
+            Assert.IsTrue(initializableInstance.Initialized);
+        }
+
+        [Test]
         public void Dispose_ParentContainer_ChildContainerResolverShouldReturnNull()
         {
             var parentBuilder = new ContainerBuilder(Container.Root);
