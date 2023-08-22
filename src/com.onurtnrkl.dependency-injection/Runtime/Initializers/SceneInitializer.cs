@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using DependencyInjection.Core;
-using DependencyInjection.Injectors;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +18,6 @@ namespace DependencyInjection.Initializers
         private static void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             CreateSceneContainer(scene);
-            SceneInjector.Inject(scene);
         }
 
         private static void CreateSceneContainer(Scene scene)
