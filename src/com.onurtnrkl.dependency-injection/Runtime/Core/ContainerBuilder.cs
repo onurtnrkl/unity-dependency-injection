@@ -38,7 +38,7 @@ namespace DependencyInjection.Core
 
         public void AddSingleton(Type registrationType, Type implementationType, GameObject prefab)
         {
-            var objectResolver = new PrefabResolver(implementationType, prefab, _containerResolver, _disposableCollection);
+            var objectResolver = new PrefabResolver(implementationType, prefab, _containerResolver, _disposableCollection, _parent);
             var instanceResolver = new SingletonResolver(objectResolver);
             _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
             _initializableCollection.TryAdd(registrationType, implementationType);
