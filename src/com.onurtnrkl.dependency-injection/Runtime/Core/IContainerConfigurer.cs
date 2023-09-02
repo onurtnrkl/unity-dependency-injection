@@ -7,6 +7,7 @@ namespace DependencyInjection.Core
     {
         void AddInstance(Type registrationType, object implementationInstance);
         void AddSingleton(Type registrationType, Type implementationType);
+        void AddSingleton(Type registrationType, Type implementationType, Component component);
         void AddSingleton(Type registrationType, Type implementationType, GameObject prefab);
         void AddTransient(Type registrationType, Type implementationType);
     }
