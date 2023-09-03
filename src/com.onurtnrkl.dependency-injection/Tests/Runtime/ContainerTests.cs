@@ -12,12 +12,25 @@ namespace DependencyInjection.Tests
         {
             var containerBuilder = new ContainerBuilder(Container.Root);
             var prefab = new GameObject("OneParameterMonoBehaviour", typeof(OneParameterMonoBehaviour));
-            containerBuilder.AddSingleton(typeof(OneParameterMonoBehaviour), prefab);
+            containerBuilder.AddSingletonPrefab(typeof(OneParameterMonoBehaviour), prefab);
             containerBuilder.AddSingleton(typeof(IZeroParameterClass), typeof(ZeroParameterClass));
             var container = containerBuilder.Build();
-            var component = (OneParameterMonoBehaviour)container.Resolve(typeof(OneParameterMonoBehaviour));
+            var instance = (OneParameterMonoBehaviour)container.Resolve(typeof(OneParameterMonoBehaviour));
 
-            Assert.IsNotNull(component.GetZeroParameterClass());
+            Assert.IsNotNull(instance.GetZeroParameterClass());
+        }
+
+        [Test]
+        public void Resolve_ContainerWithComponent_ShouldBeInjectedWithZeroParameterClass()
+        {
+            var containerBuilder = new ContainerBuilder(Container.Root);
+            var component = new GameObject("OneParameterMonoBehaviour").AddComponent<OneParameterMonoBehaviour>();
+            containerBuilder.AddSingletonComponent(typeof(OneParameterMonoBehaviour), component);
+            containerBuilder.AddSingleton(typeof(IZeroParameterClass), typeof(ZeroParameterClass));
+            var container = containerBuilder.Build();
+            var instance = (OneParameterMonoBehaviour)container.Resolve(typeof(OneParameterMonoBehaviour));
+
+            Assert.IsNotNull(instance.GetZeroParameterClass());
         }
     }
 }

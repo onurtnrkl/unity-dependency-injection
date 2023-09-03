@@ -36,7 +36,15 @@ namespace DependencyInjection.Core
             _initializableCollection.TryAdd(registrationType, implementationType);
         }
 
-        public void AddSingleton(Type registrationType, Type implementationType, Component component)
+        public void AddTransient(Type registrationType, Type implementationType)
+        {
+            var objectResolver = new ObjectResolver(implementationType, _containerResolver, _disposableCollection);
+            var instanceResolver = new TransientResolver(objectResolver);
+            _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
+            _initializableCollection.TryAdd(registrationType, implementationType);
+        }
+
+        public void AddSingletonComponent(Type registrationType, Type implementationType, Component component)
         {
             var objectResolver = new ComponentResolver(component, _containerResolver, _disposableCollection);
             var instanceResolver = new SingletonResolver(objectResolver);
@@ -44,7 +52,7 @@ namespace DependencyInjection.Core
             _initializableCollection.TryAdd(registrationType, implementationType);
         }
 
-        public void AddSingleton(Type registrationType, Type implementationType, GameObject prefab)
+        public void AddSingletonPrefab(Type registrationType, Type implementationType, GameObject prefab)
         {
             var objectResolver = new PrefabResolver(implementationType, prefab, _containerResolver, _disposableCollection, _parent);
             var instanceResolver = new SingletonResolver(objectResolver);
@@ -52,9 +60,9 @@ namespace DependencyInjection.Core
             _initializableCollection.TryAdd(registrationType, implementationType);
         }
 
-        public void AddTransient(Type registrationType, Type implementationType)
+        public void AddTransientPrefab(Type registrationType, Type implementationType, GameObject prefab)
         {
-            var objectResolver = new ObjectResolver(implementationType, _containerResolver, _disposableCollection);
+            var objectResolver = new PrefabResolver(implementationType, prefab, _containerResolver, _disposableCollection, _parent);
             var instanceResolver = new TransientResolver(objectResolver);
             _containerResolver.AddInstanceResolver(registrationType, instanceResolver);
             _initializableCollection.TryAdd(registrationType, implementationType);
