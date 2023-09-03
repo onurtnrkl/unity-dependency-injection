@@ -37,7 +37,8 @@ namespace DependencyInjection.Core
         }
 
         public static void AddInstance<TRegistration, TImplementation>(this IContainerConfigurer containerConfigurer, TImplementation implementationInstance)
-            where TImplementation : class where TRegistration : TImplementation
+            where TRegistration : class
+            where TImplementation : class, TRegistration
         {
             var registrationType = typeof(TRegistration);
             containerConfigurer.AddInstance(registrationType, implementationInstance);
@@ -51,7 +52,8 @@ namespace DependencyInjection.Core
         }
 
         public static void AddSingleton<TRegistration, TImplementation>(this IContainerConfigurer containerConfigurer)
-            where TImplementation : class where TRegistration : TImplementation
+            where TRegistration : class
+            where TImplementation : class, TRegistration
         {
             var registrationType = typeof(TRegistration);
             var implementationType = typeof(TImplementation);
@@ -66,7 +68,8 @@ namespace DependencyInjection.Core
         }
 
         public static void AddTransient<TRegistration, TImplementation>(this IContainerConfigurer containerConfigurer)
-            where TImplementation : class where TRegistration : TImplementation
+            where TRegistration : class
+            where TImplementation : class, TRegistration
         {
             var registrationType = typeof(TRegistration);
             var implementationType = typeof(TImplementation);
@@ -81,7 +84,8 @@ namespace DependencyInjection.Core
         }
 
         public static void AddSingletonComponent<TRegistration, TImplementation>(this IContainerConfigurer containerConfigurer, TImplementation component)
-            where TImplementation : Component where TRegistration : TImplementation
+            where TRegistration : class
+            where TImplementation : Component, TRegistration
         {
             var registrationType = typeof(TRegistration);
             var implementationType = typeof(TImplementation);
@@ -96,7 +100,8 @@ namespace DependencyInjection.Core
         }
 
         public static void AddSingletonPrefab<TRegistration, TImplementation>(this IContainerConfigurer containerConfigurer, GameObject prefab)
-            where TImplementation : Component where TRegistration : TImplementation
+            where TRegistration : class
+            where TImplementation : Component, TRegistration
         {
             var registrationType = typeof(TRegistration);
             var implementationType = typeof(TImplementation);
@@ -111,7 +116,8 @@ namespace DependencyInjection.Core
         }
 
         public static void AddTransientPrefab<TRegistration, TImplementation>(this IContainerConfigurer containerConfigurer, GameObject prefab)
-            where TImplementation : Component where TRegistration : TImplementation
+            where TRegistration : class
+            where TImplementation : Component, TRegistration
         {
             var registrationType = typeof(TRegistration);
             var implementationType = typeof(TImplementation);
