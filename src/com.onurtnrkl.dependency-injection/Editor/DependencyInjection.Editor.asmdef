@@ -1,0 +1,18 @@
+{
+    "name": "DependencyInjection.Editor",
+    "rootNamespace": "DependencyInjection.Editor",
+    "references": [
+        "GUID:bfaf460db88c64e6eb95f102789f3aec"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
